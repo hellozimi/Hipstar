@@ -13,6 +13,8 @@
 @property (nonatomic, strong) AVCaptureStillImageOutput *stillImageOutput;
 @property (nonatomic, strong) AVCaptureSession *session;
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *previewLayer;
+@property (nonatomic, strong) AVCaptureDevice *device;
+@property (nonatomic, strong) AVCaptureDeviceInput *input;
 @property (weak, nonatomic) IBOutlet UIView *captureView;
 @property (weak, nonatomic) IBOutlet UIButton *snap;
 
@@ -33,11 +35,11 @@
     
     [layer addSublayer:self.previewLayer];
     
-    AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    self.device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     
     NSError *error = nil;
     
-    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
+    self.input = [AVCaptureDeviceInput deviceInputWithDevice:self.device error:&error];
     
     if (nil != error) {
         NSLog(@"Error: %@", [error localizedDescription]);
@@ -48,7 +50,7 @@
     [self.stillImageOutput setOutputSettings:outputSettings];
     [self.session addOutput:self.stillImageOutput];
     
-    [self.session addInput:input];
+    [self.session addInput:self.input];
     
     [self.snap addTarget:self action:@selector(snapshot:) forControlEvents:UIControlEventTouchUpInside];
 }

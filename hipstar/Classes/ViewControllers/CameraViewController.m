@@ -182,10 +182,23 @@
             return;
         }
         
-        NSData *imgData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
+        CVImageBufferRef imageBufferRef = CMSampleBufferGetImageBuffer(imageDataSampleBuffer);
         
-        UIImageWriteToSavedPhotosAlbum([UIImage imageWithData:imgData], nil, nil, 0);
+        CIImage *image = [[CIImage alloc] initWithCVPixelBuffer:imageBufferRef];
         
+        CIContext *context = [CIContext contextWithOptions:nil];
+        
+        CIFilter *filter = [CIFilter filterWithName:@"CISepiaTone"
+                                      keysAndValues: kCIInputImageKey, image,
+                            @"inputIntensity", [NSNumber numberWithFloat:0.8], nil];
+        
+        CIImage *outputImage = [filter outputImage];
+        
+        
+        CGImageRef cgimg = [context createCGImage:outputImage fromRect:[outputImage extent]];
+        UIImage *newImg = [UIImage imageWithCGImage:cgimg];
+        
+        UIImageWriteToSavedPhotosAlbum(newImg, nil, nil, 0);
     }];
 }
 

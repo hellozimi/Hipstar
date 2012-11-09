@@ -95,6 +95,31 @@
 
 - (IBAction)toggleFlash:(id)sender {
     
+    UIButton *btn = (UIButton *)sender;
+    
+    if (btn.selected) {
+        [btn setTitle:@"Flash: Off" forState:UIControlStateNormal];
+        btn.selected = NO;
+        
+        if ([self.device lockForConfiguration:nil]) {
+            if ([self.device hasFlash] && self.device.isFlashAvailable) {
+                [self.device setFlashMode:AVCaptureFlashModeOff];
+            }
+            [self.device unlockForConfiguration];
+        }
+    }
+    else {
+        [btn setTitle:@"Flash: On" forState:UIControlStateNormal];
+        btn.selected = YES;
+        
+        if ([self.device lockForConfiguration:nil]) {
+            if ([self.device hasFlash] && self.device.isFlashAvailable) {
+                [self.device setFlashMode:AVCaptureFlashModeOn];
+            }
+            [self.device unlockForConfiguration];
+        }
+    }
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {

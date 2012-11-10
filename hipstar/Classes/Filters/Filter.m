@@ -10,4 +10,12 @@
 
 @implementation Filter
 
++ (id)filter {
+    return [[self alloc] init];
+}
+
+- (void)apply:(CGContextRef)bitmapContext {
+    
+}
+
 @end

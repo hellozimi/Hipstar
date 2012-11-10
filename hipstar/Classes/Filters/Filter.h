@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+#import "FilterGenerator.h"
+
 @interface Filter : NSObject
+
++ (Filter *)filter;
+- (void)apply:(CGContextRef)bitmapContext;
 
 @end

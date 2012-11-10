@@ -7,8 +7,11 @@
 //
 
 #import "CameraViewController.h"
+#import "FilterViewController.h"
 
-@interface CameraViewController () <AVCaptureVideoDataOutputSampleBufferDelegate>
+@interface CameraViewController () <AVCaptureVideoDataOutputSampleBufferDelegate> {
+    UIImage *_generatedImage;
+}
 
 @property (nonatomic, strong) AVCaptureStillImageOutput *stillImageOutput;
 @property (nonatomic, strong) AVCaptureSession *session;
@@ -23,8 +26,7 @@
 
 @implementation CameraViewController (Internal)
 
-- (CGPoint)convertToPointOfInterestFromViewCoordinates:(CGPoint)viewCoordinates
-{
+- (CGPoint)convertToPointOfInterestFromViewCoordinates:(CGPoint)viewCoordinates {
     CGPoint pointOfInterest = CGPointMake(.5f, .5f);
     CGSize frameSize = [self.previewLayer frame].size;
     
@@ -98,7 +100,7 @@
     [super viewDidLoad];
     
     self.session = [[AVCaptureSession alloc] init];
-    self.session.sessionPreset = AVCaptureSessionPresetPhoto;
+    self.session.sessionPreset = AVCaptureSessionPresetHigh;
     
     CALayer *layer = self.captureView.layer;
     
@@ -135,6 +137,7 @@
         [self.device unlockForConfiguration];
     }
 }
+
 
 #pragma mark - Actions
 
@@ -182,23 +185,14 @@
             return;
         }
         
-        CVImageBufferRef imageBufferRef = CMSampleBufferGetImageBuffer(imageDataSampleBuffer);
+        NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
         
-        CIImage *image = [[CIImage alloc] initWithCVPixelBuffer:imageBufferRef];
+        UIImage *baseImage = [UIImage imageWithData:imageData];
         
-        CIContext *context = [CIContext contextWithOptions:nil];
+        _generatedImage = baseImage;
         
-        CIFilter *filter = [CIFilter filterWithName:@"CISepiaTone"
-                                      keysAndValues: kCIInputImageKey, image,
-                            @"inputIntensity", [NSNumber numberWithFloat:0.8], nil];
+        [self performSegueWithIdentifier:@"PresentFilterViewController" sender:self];
         
-        CIImage *outputImage = [filter outputImage];
-        
-        
-        CGImageRef cgimg = [context createCGImage:outputImage fromRect:[outputImage extent]];
-        UIImage *newImg = [UIImage imageWithCGImage:cgimg];
-        
-        UIImageWriteToSavedPhotosAlbum(newImg, nil, nil, 0);
     }];
 }
 
@@ -235,7 +229,6 @@
     [super viewDidAppear:animated];
     [CATransaction setDisableActions:YES];
     self.previewLayer.frame = self.captureView.layer.bounds;
-    NSLog(@"%@", NSStringFromCGRect(self.captureView.frame));
     [_session startRunning];
 }
 
@@ -248,4 +241,14 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"PresentFilterViewController"]) {
+        FilterViewController *vc = segue.destinationViewController;
+        vc.originalImage = _generatedImage;
+    }
+}
+
 @end

@@ -10,4 +10,13 @@
 
 @interface FilterGenerator : NSObject
 
+CGContextRef BitmapContextCreateCopy(CGContextRef bitmapContext);
+CGContextRef BitmapContextCreateWithImage(UIImage *image, CGSize size);
+CGContextRef BitmapContextCreateWithSize(CGSize size);
+
+void BitmapContextRelease(CGContextRef context);
+void BitmapContextComposite(CGContextRef baseContext, CGContextRef overlayContext, float alpha, CGBlendMode blendMode);
+void BitmapContextCompositeImageNamed(CGContextRef context, NSString *imageName, float alpha, CGBlendMode blendMode);
+void BitmapContextCompositeWithCGImage(CGContextRef context, CGImageRef overlayImage, float alpha, CGBlendMode blendMode);
+
 @end

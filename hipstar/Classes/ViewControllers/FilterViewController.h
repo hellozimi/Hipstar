@@ -10,4 +10,6 @@
 
 @interface FilterViewController : UIViewController
 
+@property (nonatomic, strong) UIImage *originalImage;
+
 @end

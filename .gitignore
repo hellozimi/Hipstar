@@ -16,8 +16,6 @@ profile
 
 .DS_Store
 
-*.xcodeproj/*
-
 build
 *xcodeproj/*mode*
 *xcodeproj/*pbxuser

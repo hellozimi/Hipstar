@@ -7,10 +7,12 @@
 //
 
 #import "ShareViewController.h"
+#import "Photo.h"
+#import "StorageManager.h"
+#import "Filter.h"
 #import <Social/Social.h>
-#include <sys/xattr.h>
 
-@interface ShareViewController () <UIDocumentInteractionControllerDelegate>
+@interface ShareViewController () <UIDocumentInteractionControllerDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) UIDocumentInteractionController *dic;
 @property (weak, nonatomic) IBOutlet UIImageView *previewImageView;
@@ -20,6 +22,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *twitterLabel;
 @property (weak, nonatomic) IBOutlet UILabel *instagramLabel;
 @property (weak, nonatomic) IBOutlet UILabel *facebookLabel;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
+@property (weak, nonatomic) IBOutlet UIView *indicator;
 
 @end
 
@@ -45,6 +49,15 @@
     self.view.backgroundColor = [UIColor colorWithHue:0.000 saturation:0.000 brightness:0.859 alpha:1];
     
     [self updateSharingOptions];
+    
+    _indicator.layer.cornerRadius = 4;
+    
+    if (self.photo) {
+        _doneButton.hidden = YES;
+    }
+    else {
+        self.navigationItem.rightBarButtonItem = nil;
+    }
 }
 
 - (void)setFullImage:(UIImage *)fullImage {
@@ -69,7 +82,7 @@
     
     [fm createFileAtPath:fullPath contents:jpegData attributes:nil];
     
-    [self addSkipBackupAttributeToRelativeFilePath:fullPath];
+    [StorageManager addSkipBackupAttributeToRelativeFilePath:fullPath];
     
 }
 
@@ -98,8 +111,29 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)delete:(id)sender {
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Do you really want to delete this photo?" delegate:self cancelButtonTitle:@"No" destructiveButtonTitle:@"Yes" otherButtonTitles:nil];
+    
+    [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
+}
+
 - (IBAction)close:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (self.photo) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else {
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+#pragma mark - UIActionSheetDelegate Implementation
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        [[StorageManager instance] deletePhoto:self.photo];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 #pragma mark - Sharing
@@ -155,10 +189,26 @@
 }
 
 - (IBAction)done:(id)sender {
+    
+    _indicator.hidden = NO;
+    
+    NSString *thumbnailPath = [[StorageManager instance] storeData:UIImageJPEGRepresentation(_previewImage, 0.6) extension:@"jpg"];
+    NSString *largePath = [[StorageManager instance] storeData:UIImageJPEGRepresentation(_fullImage, 0.6) extension:@"jpg"];;
+    
+    Photo *photo = [Photo photo];
+    photo.thumbnailPath = thumbnailPath;
+    photo.largePath = largePath;
+    photo.filterName = self.filter.name;
+    photo.effectName = self.effect.name;
+    
+    [[StorageManager instance] savePhotoToGallery:photo];
+    
+    self.navigationController.view.userInteractionEnabled = NO;
+    
     UIImageWriteToSavedPhotosAlbum(_fullImage, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
 }
+
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo: (void *) contextInfo {
-    self.navigationController.view.userInteractionEnabled = NO;
     [[UIApplication sharedApplication] keyWindow].rootViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CameraViewController"];
 }
 #pragma mark - UIDocumentInteractionControllerDelegate Implementation
@@ -167,15 +217,5 @@
 
 #pragma mark - iCloud
 
-- (BOOL)addSkipBackupAttributeToRelativeFilePath:(NSString*)relativePath {
-    NSURL *URL = [NSURL fileURLWithPath:relativePath];
-    const char* filePath = [[URL path] fileSystemRepresentation];
-    
-    const char* attrName = "com.apple.MobileBackup";
-    u_int8_t attrValue = 1;
-    
-    int result = setxattr(filePath, attrName, &attrValue, sizeof(attrValue), 0, 0);
-    return result == 0;
-}
 
 @end

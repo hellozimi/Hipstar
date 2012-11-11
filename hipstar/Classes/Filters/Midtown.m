@@ -65,4 +65,8 @@
     return image;
 }
 
+- (NSString *)name {
+    return @"Midtown";
+}
+
 @end

@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class Photo, Filter;
+
 @interface ShareViewController : UIViewController
 
 @property (nonatomic, strong) UIImage *previewImage;
 @property (nonatomic, strong) UIImage *fullImage;
+@property (nonatomic, strong) Filter *filter;
+@property (nonatomic, strong) Filter *effect;
+
+@property (nonatomic, strong) Photo *photo;
 
 @end

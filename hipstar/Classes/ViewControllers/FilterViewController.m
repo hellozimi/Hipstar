@@ -11,10 +11,6 @@
 #import "ShareViewController.h"
 #import "FilterCollectionViewCell.h"
 
-#import "RedOverlay.h"
-#import "TurqoiseOverlay.h"
-#import "TestFilter.h"
-
 #import "Midtown.h"
 #import "Chipper.h"
 
@@ -22,6 +18,7 @@
     UIImage *_previewImage;
     
     Filter *_currentFilter;
+    Filter *_currentEffect;
     
     int _currentSelectedFilterIndex;
     int _currentSelectedEffectIndex;
@@ -311,8 +308,10 @@
         if (_currentFilter) {
             full = [_currentFilter apply:_originalImage];
         }
-        vc.fullImage = full;
         
+        vc.fullImage = full;
+        vc.filter = [Chipper filter];
+        vc.effect = [Midtown filter];
     }
 }
 

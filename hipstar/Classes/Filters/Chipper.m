@@ -25,4 +25,8 @@
     return image;
 }
 
+- (NSString *)name {
+    return @"Chipper";
+}
+
 @end

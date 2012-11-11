@@ -218,6 +218,10 @@
     [self.session addInput:self.input];
 }
 
+- (IBAction)openGallery:(id)sender {
+    [self performSegueWithIdentifier:@"PresentGalleryViewController" sender:nil];
+}
+
 - (void)tapToFocus:(UITapGestureRecognizer *)recognizer {
     if ([self.device lockForConfiguration:nil]) {
         CGPoint point = [self convertToPointOfInterestFromViewCoordinates:[recognizer locationInView:recognizer.view]];

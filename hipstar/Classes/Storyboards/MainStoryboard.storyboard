@@ -15,7 +15,7 @@
                             <view contentMode="center" horizontalHuggingPriority="1" verticalHuggingPriority="1" id="NAS-oi-9yb">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="405"/>
                                 <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <color key="backgroundColor" red="0.17254901960784313" green="0.17254901960784313" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" image="camera_overlay.png" id="CXu-n3-xX5">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="405"/>
@@ -59,6 +59,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="openGallery:" destination="hFo-Uc-YcT" eventType="touchUpInside" id="5OG-3L-h44"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JQS-yD-kDb">
                                 <rect key="frame" x="266" y="17.5" width="44" height="44"/>
@@ -97,11 +100,12 @@
                         <outlet property="flashButton" destination="Wtx-Kp-WxB" id="Tke-C1-Byl"/>
                         <outlet property="snap" destination="KPX-iu-8Jt" id="Yvc-FS-XaU"/>
                         <segue destination="2ua-pB-bPO" kind="modal" identifier="PresentFilterViewController" id="bcF-fU-5j0"/>
+                        <segue destination="06P-oZ-2am" kind="modal" identifier="PresentGalleryViewController" id="IMv-sU-Lht"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WBe-eT-PtI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="282" y="124"/>
+            <point key="canvasLocation" x="286" y="124"/>
         </scene>
         <!--Filter View Controller-->
         <scene sceneID="vnw-jM-JTd">
@@ -324,7 +328,135 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="77e-UG-MAt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="712" y="124"/>
+            <point key="canvasLocation" x="825" y="124"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="YJ1-Tg-hBL">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="06P-oZ-2am" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Vb7-V6-W8U">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="keK-1e-2ia" kind="relationship" relationship="rootViewController" id="sLE-cZ-cUt"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="la0-l7-bUy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="825" y="856"/>
+        </scene>
+        <!--Gallery View Controller - Photo Gallery-->
+        <scene sceneID="hCt-jq-67M">
+            <objects>
+                <viewController id="keK-1e-2ia" customClass="GalleryViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fwV-CT-5il">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="FZA-r2-WAb">
+                                <rect key="frame" x="1" y="0.0" width="318" height="416"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="Vyy-eP-mUW">
+                                    <size key="itemSize" width="106" height="116"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CellItem" id="7Dp-f7-kyg" customClass="GalleryCollectionViewCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="106" height="115"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="106" height="115"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="FSa-Y0-gNp">
+                                                    <rect key="frame" x="10" y="10" width="86" height="86"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="border_scale.png" id="DGp-68-ILv">
+                                                    <rect key="frame" x="9" y="9" width="88" height="89"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <rect key="contentStretch" x="0.5" y="0.5" width="0.0" height="0.0"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3dl-cw-PqC">
+                                                    <rect key="frame" x="0.0" y="94" width="106" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="Diamond ">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.39215686274509803" green="0.39215686274509803" blue="0.39215686274509803" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="9" name="Helvetica-Bold"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="♥">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.39215686274509803" green="0.39215686274509803" blue="0.39215686274509803" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="9" name="HiraKakuProN-W6"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content=" Clothesline">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.39215686274509803" green="0.39215686274509803" blue="0.39215686274509803" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="9" name="Helvetica-Bold"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <size key="customSize" width="106" height="115"/>
+                                        <connections>
+                                            <outlet property="filterImageView" destination="FSa-Y0-gNp" id="VLq-Mg-6WW"/>
+                                            <outlet property="titleLabel" destination="3dl-cw-PqC" id="k1R-h5-7DF"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="keK-1e-2ia" id="rQM-aT-5Qd"/>
+                                    <outlet property="delegate" destination="keK-1e-2ia" id="dSC-m4-4su"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.85882352941176465" green="0.85882352941176465" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Photo Gallery" id="dZs-Yg-RBl">
+                        <barButtonItem key="leftBarButtonItem" id="e1N-Ol-ZYx">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Xeh-Zm-Ie7">
+                                <rect key="frame" x="5" y="5" width="44" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="4" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" image="navbar_back_button.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="close:" destination="zBA-CB-bZZ" eventType="touchUpInside" id="5oD-Kp-3TU"/>
+                                    <action selector="close:" destination="keK-1e-2ia" eventType="touchUpInside" id="wcc-wE-NAY"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="FZA-r2-WAb" id="gnb-dV-vdR"/>
+                        <segue destination="zBA-CB-bZZ" kind="push" identifier="PushShareViewController" id="INQ-jx-f3i"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="87v-hQ-sfS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1359" y="856"/>
         </scene>
         <!--Share View Controller - Share Photo-->
         <scene sceneID="sWa-I3-PTx">
@@ -433,6 +565,17 @@
                                     <action selector="done:" destination="zBA-CB-bZZ" eventType="touchUpInside" id="KuE-lZ-iuC"/>
                                 </connections>
                             </button>
+                            <view hidden="YES" contentMode="scaleToFill" id="4ya-jb-Cei">
+                                <rect key="frame" x="102" y="78" width="117" height="117"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" animating="YES" style="whiteLarge" id="EWE-ke-YW2">
+                                        <rect key="frame" x="40" y="40" width="37" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.70999999999999996" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.85882352941176465" green="0.85882352941176465" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -455,10 +598,30 @@
                                 </connections>
                             </button>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" id="dOP-3C-zKo">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="98v-IE-FXV">
+                                <rect key="frame" x="271" y="5" width="44" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="4" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" image="navbar_back_button.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="delete:" destination="zBA-CB-bZZ" eventType="touchUpInside" id="Kyj-nE-gI5"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="doneButton" destination="aPw-83-r22" id="scw-Q3-JCn"/>
                         <outlet property="facebookButton" destination="If7-zC-QWo" id="Aca-Kw-GHZ"/>
                         <outlet property="facebookLabel" destination="fZ4-8q-Qh9" id="FMi-jT-4Mr"/>
+                        <outlet property="indicator" destination="4ya-jb-Cei" id="b7r-uy-1GT"/>
                         <outlet property="instagramButton" destination="sOQ-Ly-jkg" id="tNB-Oy-OKp"/>
                         <outlet property="instagramLabel" destination="czG-NG-lYx" id="NY6-4j-Y5g"/>
                         <outlet property="previewImageView" destination="F8B-di-Ru4" id="70w-1N-Bg7"/>
@@ -468,7 +631,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jrh-vz-lLB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1558" y="124"/>
+            <point key="canvasLocation" x="1898" y="124"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Pth-sP-GwL">
@@ -483,7 +646,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2DB-MP-tey" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1129" y="124"/>
+            <point key="canvasLocation" x="1359" y="124"/>
         </scene>
     </scenes>
     <resources>
@@ -514,70 +677,12 @@
         <image name="navbar_back_button.png" width="26" height="20"/>
         <image name="share_rect.png" width="232" height="69"/>
     </resources>
-    <classes>
-        <class className="CameraViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CameraViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="importFromCameraRoll:"/>
-                <relationship kind="outlet" name="cameraSwitchButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="captureView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="flashButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="snap" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="FilterCollectionViewCell" superclassName="UICollectionViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FilterCollectionViewCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="filterBorderImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="filterImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="selectedImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="FilterViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FilterViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="back:"/>
-                <relationship kind="action" name="disortButtonPressed:"/>
-                <relationship kind="action" name="done:"/>
-                <relationship kind="action" name="filterButtonPressed:"/>
-                <relationship kind="outlet" name="arrow" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="border" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="disortButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="effectsCollectionView" candidateClass="UICollectionView"/>
-                <relationship kind="outlet" name="filterButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="filterCollectionView" candidateClass="UICollectionView"/>
-                <relationship kind="outlet" name="previewImageView" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="ShareViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ShareViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="facebookButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="facebookLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="instagramButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="instagramLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="previewImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="twitterButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="twitterLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="UICollectionReusableView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
-        </class>
-        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
-        </class>
-        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
-        </class>
-        <class className="UICollectionViewLayout" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="INQ-jx-f3i"/>
+    </inferredMetricsTieBreakers>
 </document>

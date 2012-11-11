@@ -131,21 +131,43 @@
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="EffectItem" id="BUH-4b-p6i">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="EffectItem" id="BUH-4b-p6i" customClass="FilterCollectionViewCell">
                                                 <rect key="frame" x="0.0" y="-1" width="67" height="86"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                     <rect key="frame" x="0.0" y="0.0" width="67" height="86"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" id="WqB-Kb-u2k">
-                                                            <rect key="frame" x="0.0" y="0.5" width="67" height="86"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                            <color key="backgroundColor" red="0.979871724" green="1" blue="0.75814430749999995" alpha="1" colorSpace="calibratedRGB"/>
-                                                        </view>
+                                                        <imageView userInteractionEnabled="NO" contentMode="center" image="icon_disort.png" id="11P-QT-ugW">
+                                                            <rect key="frame" x="5" y="5" width="57" height="57"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                        </imageView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="border_scale.png" id="s86-Xy-THF">
+                                                            <rect key="frame" x="4" y="4" width="59" height="60"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <rect key="contentStretch" x="0.49999999999999994" y="0.5" width="0.0" height="0.0"/>
+                                                        </imageView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="filter_selected.png" id="xDL-9Z-7r4">
+                                                            <rect key="frame" x="3" y="3" width="61" height="61"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tFV-wd-Fkk">
+                                                            <rect key="frame" x="0.0" y="60" width="67" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                                            <color key="textColor" red="0.39215686274509803" green="0.39215686274509803" blue="0.39215686274509803" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <connections>
+                                                    <outlet property="filterBorderImageView" destination="s86-Xy-THF" id="XE6-4d-2ym"/>
+                                                    <outlet property="filterImageView" destination="11P-QT-ugW" id="gR4-bG-c4Z"/>
+                                                    <outlet property="selectedImageView" destination="xDL-9Z-7r4" id="wP0-7s-dav"/>
+                                                    <outlet property="titleLabel" destination="tFV-wd-Fkk" id="xdD-L3-9Yy"/>
+                                                </connections>
                                             </collectionViewCell>
                                         </cells>
                                         <connections>
@@ -154,7 +176,7 @@
                                         </connections>
                                     </collectionView>
                                     <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="acA-B9-2aI" userLabel="Filter Collection View">
-                                        <rect key="frame" x="319" y="0.5" width="320" height="85"/>
+                                        <rect key="frame" x="320" y="0.5" width="320" height="85"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Neh-Oq-DsN">
@@ -164,21 +186,42 @@
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FilterItem" id="b0T-RS-GA0">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FilterItem" id="b0T-RS-GA0" customClass="FilterCollectionViewCell">
                                                 <rect key="frame" x="0.0" y="-1" width="67" height="86"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                     <rect key="frame" x="0.0" y="0.0" width="67" height="86"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" id="c2w-fr-u8j">
-                                                            <rect key="frame" x="0.0" y="0.0" width="67" height="86"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                            <color key="backgroundColor" red="0.79146194312057394" green="0.63150102228675908" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        </view>
+                                                        <imageView userInteractionEnabled="NO" contentMode="center" id="fEj-Xm-3AU">
+                                                            <rect key="frame" x="5" y="5" width="57" height="57"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                        </imageView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="border_scale.png" id="P84-oq-Ycv">
+                                                            <rect key="frame" x="4" y="4" width="59" height="60"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <rect key="contentStretch" x="0.49999999999999994" y="0.5" width="0.0" height="0.0"/>
+                                                        </imageView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="filter_selected.png" id="Wcr-xd-oT5">
+                                                            <rect key="frame" x="3" y="3" width="61" height="61"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="m1J-9b-I00">
+                                                            <rect key="frame" x="0.0" y="60" width="67" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                                            <color key="textColor" red="0.3921568627" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
+                                                <connections>
+                                                    <outlet property="filterBorderImageView" destination="P84-oq-Ycv" id="h9P-3H-3SW"/>
+                                                    <outlet property="filterImageView" destination="fEj-Xm-3AU" id="uwd-rO-Vk0"/>
+                                                    <outlet property="selectedImageView" destination="Wcr-xd-oT5" id="ahz-pb-FSA"/>
+                                                    <outlet property="titleLabel" destination="m1J-9b-I00" id="h8V-x4-CdW"/>
+                                                </connections>
                                             </collectionViewCell>
                                         </cells>
                                         <connections>
@@ -261,6 +304,11 @@
                                 <rect key="frame" x="127" y="399" width="14" height="8"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="border_scale.png" id="QpL-EV-9qb">
+                                <rect key="frame" x="9" y="9" width="302" height="303"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                                <rect key="contentStretch" x="0.39999999999999997" y="0.39999999999999997" width="0.0" height="0.0"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.76078431369999999" green="0.75294117650000003" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -278,7 +326,7 @@
             </objects>
             <point key="canvasLocation" x="712" y="124"/>
         </scene>
-        <!--Share View Controller-->
+        <!--Share View Controller - Share Photo-->
         <scene sceneID="sWa-I3-PTx">
             <objects>
                 <viewController id="zBA-CB-bZZ" customClass="ShareViewController" sceneMemberID="viewController">
@@ -287,70 +335,140 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="APa-j7-eYi">
-                                <rect key="frame" x="0.0" y="197" width="320" height="171"/>
+                                <rect key="frame" x="0.0" y="249" width="320" height="96"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="s6Z-lm-Wzr">
-                                        <rect key="frame" x="40" y="20" width="60" height="44"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="share_rect.png" id="GGV-Rr-thV">
+                                        <rect key="frame" x="44" y="15" width="232" height="69"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="s6Z-lm-Wzr">
+                                        <rect key="frame" x="57" y="24" width="44" height="44"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="T">
+                                        <state key="normal" image="icon_twitter.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="highlighted">
+                                        <state key="highlighted" image="icon_twitter_selected.png">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="shareOnTwitter:" destination="zBA-CB-bZZ" eventType="touchUpInside" id="R2g-KD-3uu"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sOQ-Ly-jkg">
-                                        <rect key="frame" x="130" y="20" width="60" height="44"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="sOQ-Ly-jkg">
+                                        <rect key="frame" x="138" y="24" width="44" height="44"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="I">
+                                        <state key="normal" image="icon_instagram.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="highlighted">
+                                        <state key="highlighted" image="icon_instagram_selected.png">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="shareOnInstagram:" destination="zBA-CB-bZZ" eventType="touchUpInside" id="azL-vM-p6T"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="If7-zC-QWo">
-                                        <rect key="frame" x="220" y="20" width="60" height="44"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="If7-zC-QWo">
+                                        <rect key="frame" x="219" y="24" width="44" height="44"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="F">
+                                        <state key="normal" image="icon_facebook.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="highlighted">
+                                        <state key="highlighted" image="icon_facebook_selected.png">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="shareOnFacebook:" destination="zBA-CB-bZZ" eventType="touchUpInside" id="yVd-0U-nWS"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Facebook" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fZ4-8q-Qh9">
+                                        <rect key="frame" x="216" y="60" width="52" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Instagram" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="czG-NG-lYx">
+                                        <rect key="frame" x="134" y="60" width="52" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Twitter" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3iO-OO-dFw">
+                                        <rect key="frame" x="53" y="60" width="52" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.85882352939999995" green="0.85882352939999995" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="F8B-di-Ru4">
-                                <rect key="frame" x="40" y="13" width="240" height="240"/>
+                                <rect key="frame" x="44" y="20.5" width="232" height="232"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="border_scale.png" id="FzW-sE-asi">
+                                <rect key="frame" x="44" y="19" width="232" height="235"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <rect key="contentStretch" x="0.5" y="0.5" width="0.0" height="0.0"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="aPw-83-r22">
+                                <rect key="frame" x="102" y="353" width="102" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                                <size key="titleShadowOffset" width="0.0" height="1"/>
+                                <state key="normal" title="Done" backgroundImage="done_button.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.16752772177419356" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="done:" destination="zBA-CB-bZZ" eventType="touchUpInside" id="KuE-lZ-iuC"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.85882352941176465" green="0.85882352941176465" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" id="xa4-Bu-cpJ"/>
+                    <navigationItem key="navigationItem" title="Share Photo" id="xa4-Bu-cpJ">
+                        <barButtonItem key="leftBarButtonItem" id="tVv-dq-Sgj">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="wYq-ji-Bcm">
+                                <rect key="frame" x="5" y="5" width="44" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="4" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" image="navbar_back_button.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="close:" destination="zBA-CB-bZZ" eventType="touchUpInside" id="uZk-P4-PnK"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="facebookButton" destination="If7-zC-QWo" id="Aca-Kw-GHZ"/>
+                        <outlet property="facebookLabel" destination="fZ4-8q-Qh9" id="FMi-jT-4Mr"/>
                         <outlet property="instagramButton" destination="sOQ-Ly-jkg" id="tNB-Oy-OKp"/>
+                        <outlet property="instagramLabel" destination="czG-NG-lYx" id="NY6-4j-Y5g"/>
                         <outlet property="previewImageView" destination="F8B-di-Ru4" id="70w-1N-Bg7"/>
                         <outlet property="twitterButton" destination="s6Z-lm-Wzr" id="njh-wh-WFK"/>
+                        <outlet property="twitterLabel" destination="3iO-OO-dFw" id="yEl-ua-yCD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jrh-vz-lLB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1557" y="124"/>
+            <point key="canvasLocation" x="1558" y="124"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Pth-sP-GwL">
@@ -370,28 +488,50 @@
     </scenes>
     <resources>
         <image name="arrow.png" width="14" height="8"/>
+        <image name="border_scale.png" width="22" height="22"/>
         <image name="camera_bar.png" width="1" height="55"/>
         <image name="camera_overlay.png" width="320" height="493"/>
+        <image name="done_button.png" width="102" height="43"/>
+        <image name="filter_selected.png" width="61" height="61"/>
         <image name="icon_camera_switch.png" width="40" height="40"/>
         <image name="icon_camera_switch_pressed.png" width="40" height="40"/>
         <image name="icon_cameraroll.png" width="32" height="29"/>
         <image name="icon_cancel.png" width="21" height="20"/>
+        <image name="icon_disort.png" width="36" height="37"/>
         <image name="icon_disort_selected.png" width="36" height="37"/>
         <image name="icon_done.png" width="23" height="20"/>
+        <image name="icon_facebook.png" width="37" height="31"/>
+        <image name="icon_facebook_selected.png" width="37" height="31"/>
         <image name="icon_filter.png" width="36" height="37"/>
         <image name="icon_flash_off.png" width="40" height="40"/>
         <image name="icon_flash_prssed.png" width="40" height="40"/>
         <image name="icon_gallery.png" width="32" height="36"/>
+        <image name="icon_instagram.png" width="37" height="31"/>
+        <image name="icon_instagram_selected.png" width="37" height="31"/>
         <image name="icon_take.png" width="94" height="44"/>
+        <image name="icon_twitter.png" width="37" height="31"/>
+        <image name="icon_twitter_selected.png" width="37" height="31"/>
+        <image name="navbar_back_button.png" width="26" height="20"/>
+        <image name="share_rect.png" width="232" height="69"/>
     </resources>
     <classes>
         <class className="CameraViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CameraViewController.h"/>
             <relationships>
+                <relationship kind="action" name="importFromCameraRoll:"/>
                 <relationship kind="outlet" name="cameraSwitchButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="captureView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="flashButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="snap" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="FilterCollectionViewCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FilterCollectionViewCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="filterBorderImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="filterImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="selectedImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="FilterViewController" superclassName="UIViewController">
@@ -402,6 +542,7 @@
                 <relationship kind="action" name="done:"/>
                 <relationship kind="action" name="filterButtonPressed:"/>
                 <relationship kind="outlet" name="arrow" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="border" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="disortButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="effectsCollectionView" candidateClass="UICollectionView"/>
                 <relationship kind="outlet" name="filterButton" candidateClass="UIButton"/>
@@ -413,9 +554,12 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ShareViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="facebookButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="facebookLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="instagramButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="instagramLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="previewImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="twitterButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="twitterLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="UICollectionReusableView" superclassName="UIView">
@@ -426,6 +570,9 @@
         </class>
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="UICollectionViewLayout" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

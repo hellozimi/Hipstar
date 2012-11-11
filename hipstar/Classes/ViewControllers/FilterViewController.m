@@ -9,14 +9,22 @@
 #import "FilterViewController.h"
 #import "FilterGenerator.h"
 #import "ShareViewController.h"
+#import "FilterCollectionViewCell.h"
+
 #import "RedOverlay.h"
 #import "TurqoiseOverlay.h"
 #import "TestFilter.h"
 
+#import "Midtown.h"
+#import "Chipper.h"
+
 @interface FilterViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout> {
-    CGContextRef _previewContext;
+    UIImage *_previewImage;
     
     Filter *_currentFilter;
+    
+    int _currentSelectedFilterIndex;
+    int _currentSelectedEffectIndex;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *previewImageView;
@@ -27,6 +35,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *effectsCollectionView;
 @property (weak, nonatomic) IBOutlet UICollectionView *filterCollectionView;
 
+@property (weak, nonatomic) IBOutlet UIImageView *border;
 
 
 - (void)update;
@@ -55,14 +64,12 @@
     //[self.arrow setTranslatesAutoresizingMaskIntoConstraints:YES];
     
     
-    UIImageView *grayFilter = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_gray_filter"]];
-    CGRect frame;
+    _previewImageView.layer.cornerRadius = 4;
+    _previewImageView.layer.masksToBounds = YES;
     
-    frame = grayFilter.frame;
-    frame.origin.y = 10;
-    frame.origin.x = 60;
-    self.filterCollectionView.clipsToBounds = NO;
-    [self.filterCollectionView addSubview:grayFilter];
+    _border.top += 0.5;
+    
+    _currentSelectedEffectIndex = _currentSelectedFilterIndex = 0;
 }
 
 - (void)didReceiveMemoryWarning
@@ -71,20 +78,45 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (UIImage *)resizeImage:(UIImage*)image newSize:(CGSize)newSize {
+    CGRect newRect = CGRectIntegral(CGRectMake(0, 0, newSize.width, newSize.height));
+    CGImageRef imageRef = image.CGImage;
+    
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    // Set the quality level to use when rescaling
+    CGContextSetInterpolationQuality(context, kCGInterpolationHigh);
+    CGAffineTransform flipVertical = CGAffineTransformMake(1, 0, 0, -1, 0, newSize.height);
+    
+    CGContextConcatCTM(context, flipVertical);
+    // Draw into the context; this scales the image
+    CGContextDrawImage(context, newRect, imageRef);
+    
+    // Get the resized image from the context and a UIImage
+    CGImageRef newImageRef = CGBitmapContextCreateImage(context);
+    UIImage *newImage = [UIImage imageWithCGImage:newImageRef];
+    
+    CGImageRelease(newImageRef);
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
 - (void)setOriginalImage:(UIImage *)originalImage {
     _originalImage = originalImage;
+    _previewImage = [self resizeImage:_originalImage newSize:CGSizeMake(250, 250)];
     
-    _previewContext = BitmapContextCreateWithImage(originalImage, CGSizeMake(250, 250));
 }
 
 - (void)update {
     
     double start = [NSDate timeIntervalSinceReferenceDate];
     
-    UIImage *img = [UIImage imageWithCGImage:CGBitmapContextCreateImage(_previewContext)];
+    UIImage *img = _previewImage;
     
     if (_currentFilter) {
-        img = [_currentFilter apply:img];
+        img = [_currentFilter apply:_previewImage];
     }
     
     _previewImageView.image = img;
@@ -93,48 +125,6 @@
     
     NSLog(@"Time to generate filter %@: %f", NSStringFromClass([_currentFilter class]), end-start);
     return;
-    /*
-     CGImageRef imageRef = CGBitmapContextCreateImage(context);
-     
-     
-     if (_currentFilter) {
-     
-     NSLog(@"Time to generate filter %@: %f", NSStringFromClass([_currentFilter class]), end-start);
-     
-     }
-     
-     UIImage *originalImage = [UIImage imageWithCGImage:imageRef scale:1 orientation:_originalImage.imageOrientation];
-     CGImageRelease(imageRef);
-     
-     
-     _previewImageView.image = originalImage;
-     
-     if (!_currentFilter) {
-     BitmapContextRelease(context);
-     CGContextRelease(context);
-     return;
-     }
-     
-     BitmapContextRelease(context);
-     CGContextRelease(context);
-     */
-    /*
-     CGContextRef exportContext = BitmapContextCreateWithImage(_originalImage, CGSizeMake(_originalImage.size.width, _originalImage.size.height));
-     
-     if (_currentFilter) {
-     [_currentFilter apply:exportContext];
-     }
-     CGImageRef o = CGBitmapContextCreateImage(exportContext);
-     BitmapContextRelease(context);
-     CGContextRelease(context);
-     
-     UIImage *eo = [UIImage imageWithCGImage:o scale:1 orientation:UIImageOrientationRight];
-     
-     UIImageWriteToSavedPhotosAlbum(eo, nil, nil, 0);
-     
-     CGImageRelease(o);
-     CGContextRelease(exportContext);
-     */
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -162,6 +152,12 @@
         frame.origin.x = 127;
         self.arrow.frame = frame;
     } completion:nil];
+    
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.effectsCollectionView.left = 0;
+        self.filterCollectionView.left = 320;
+    }];
 }
 
 - (IBAction)filterButtonPressed:(id)sender {
@@ -173,13 +169,19 @@
         CGRect frame = self.arrow.frame;
         frame.origin.x = 179;
         self.arrow.frame = frame;
+        
     } completion:nil];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.effectsCollectionView.left = -320;
+        self.filterCollectionView.left = 0;
+    }];
 }
 
 #pragma mark - UICollectionViewFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(57, 70);
+    return CGSizeMake(67, 80);
 }
 
 // 3
@@ -191,17 +193,42 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    int i = indexPath.row % 3;
-    switch (i) {
-        case 0:
-            _currentFilter = [RedOverlay filter];
-            break;
-        case 1:
-            _currentFilter = [TurqoiseOverlay filter];
-            break;
-        case 2:
-            _currentFilter = [TestFilter filter];
-            break;
+    if (collectionView == self.filterCollectionView) {
+        
+        FilterCollectionViewCell *oldCell = (FilterCollectionViewCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:_currentSelectedFilterIndex inSection:0]];
+        oldCell.selected = NO;
+        
+        _currentSelectedFilterIndex = indexPath.row;
+        
+        
+        FilterCollectionViewCell *newCell = (FilterCollectionViewCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:_currentSelectedFilterIndex inSection:0]];
+        newCell.selected = YES;
+        
+        int i = indexPath.row % 3;
+        switch (i) {
+            case 0:
+                _currentFilter = nil;
+                break;
+            case 1:
+                _currentFilter = [Midtown filter];
+                break;
+            case 2:
+                _currentFilter = [Chipper filter];
+                break;
+        }
+        
+    }
+    else {
+        
+        FilterCollectionViewCell *oldCell = (FilterCollectionViewCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:_currentSelectedEffectIndex inSection:0]];
+        oldCell.selected = NO;
+        
+        _currentSelectedEffectIndex = indexPath.row;
+        
+        
+        FilterCollectionViewCell *newCell = (FilterCollectionViewCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:_currentSelectedEffectIndex inSection:0]];
+        newCell.selected = YES;
+        
     }
     
     [self update];
@@ -211,19 +238,60 @@
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 12;
+    return (collectionView == self.filterCollectionView) ? 9 : 12;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = nil;
+    FilterCollectionViewCell *cell = nil;
     
-    if (collectionView == self.filterCollectionView) {
+    if (collectionView == self.effectsCollectionView) {
         
-        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FilterItem" forIndexPath:indexPath];
+        cell = (FilterCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"EffectItem" forIndexPath:indexPath];
+        
+        
+        cell.filterImage = [UIImage imageNamed:@"no-fx.jpg"];
+        cell.selected = indexPath.row == _currentSelectedEffectIndex;
     }
-    else if (collectionView == self.effectsCollectionView) {
+    else if (collectionView == self.filterCollectionView) {
         
-        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"EffectItem" forIndexPath:indexPath];
+        cell = (FilterCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"FilterItem" forIndexPath:indexPath];
+        // Midtown, Chipper, Cronkite, Clothesline, Frado, Deck, Frapp, Tassle
+        
+        switch (indexPath.row) {
+            case 0:
+                cell.title = @"No fx";
+                break;
+            case 1:
+                cell.title = @"Midtown";
+                break;
+            case 2:
+                cell.title = @"Chipper";
+                break;
+            case 3:
+                cell.title = @"Cronkite";
+                break;
+            case 4:
+                cell.title = @"Clothesline";
+                break;
+            case 5:
+                cell.title = @"Frado";
+                break;
+            case 6:
+                cell.title = @"Deck";
+                break;
+            case 7:
+                cell.title = @"Frapp";
+                break;
+            case 8:
+                cell.title = @"Tassle";
+                break;
+                
+            default:
+                break;
+        }
+        
+        cell.selected = indexPath.row == _currentSelectedFilterIndex;
+        cell.filterImage = [UIImage imageNamed:@"no-fx.jpg"];
     }
     
     return cell;
@@ -233,47 +301,20 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"PresentShareViewController"]) {
-        /*
-         UINavigationController *nc = segue.destinationViewController;
-         ShareViewController *vc = (ShareViewController *)[nc.viewControllers objectAtIndex:0];
-         vc.previewImage = _previewImageView.image;
-         
-         
-         CGContextRef context = BitmapContextCreateCopy(_previewContext);
-         
-         if (_currentFilter) {
-         [_currentFilter apply:context];
-         }
-         
-         CGImageRef imageRef = CGBitmapContextCreateImage(context);
-         
-         
-         UIImage *originalImage = [UIImage imageWithCGImage:imageRef scale:1 orientation:_originalImage.imageOrientation];
-         CGImageRelease(imageRef);
-         
-         
-         _previewImageView.image = originalImage;
-         
-         
-         CGContextRef exportContext = BitmapContextCreateWithImage(_originalImage, CGSizeMake(_originalImage.size.width, _originalImage.size.height));
-         
-         if (_currentFilter) {
-         [_currentFilter apply:exportContext];
-         }
-         CGImageRef o = CGBitmapContextCreateImage(exportContext);
-         BitmapContextRelease(context);
-         CGContextRelease(context);
-         
-         UIImage *full = [UIImage imageWithCGImage:o scale:1 orientation:UIImageOrientationRight];
-         
-         //UIImageWriteToSavedPhotosAlbum(eo, nil, nil, 0);
-         
-         CGImageRelease(o);
-         CGContextRelease(exportContext);
-         
-         vc.fullImage = full;
-         */
+        
+        UINavigationController *nc = segue.destinationViewController;
+        ShareViewController *vc = (ShareViewController *)[nc.viewControllers objectAtIndex:0];
+        vc.previewImage = _previewImageView.image;
+        
+        UIImage *full = _originalImage;
+        
+        if (_currentFilter) {
+            full = [_currentFilter apply:_originalImage];
+        }
+        vc.fullImage = full;
+        
     }
 }
 
 @end
+

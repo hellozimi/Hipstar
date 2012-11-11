@@ -136,3 +136,5 @@
 #import "GPUImageParallelCoordinateLineTransformFilter.h"
 #import "GPUImageThresholdSketchFilter.h"
 #import "GPUImageLineGenerator.h"
+
+#import "GPUImageColorBalanceFilter.h"

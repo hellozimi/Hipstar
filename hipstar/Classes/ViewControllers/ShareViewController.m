@@ -17,6 +17,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *twitterButton;
 @property (weak, nonatomic) IBOutlet UIButton *instagramButton;
 @property (weak, nonatomic) IBOutlet UIButton *facebookButton;
+@property (weak, nonatomic) IBOutlet UILabel *twitterLabel;
+@property (weak, nonatomic) IBOutlet UILabel *instagramLabel;
+@property (weak, nonatomic) IBOutlet UILabel *facebookLabel;
 
 @end
 
@@ -36,6 +39,10 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     _previewImageView.image = self.previewImage;
+    _previewImageView.layer.masksToBounds = YES;
+    _previewImageView.layer.cornerRadius = 4;
+    
+    self.view.backgroundColor = [UIColor colorWithHue:0.000 saturation:0.000 brightness:0.859 alpha:1];
     
     [self updateSharingOptions];
 }
@@ -70,15 +77,18 @@
     
     if (![SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
         _twitterButton.enabled = NO;
+        _twitterLabel.alpha = .5;
     }
     
     if (![SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         _facebookButton.enabled = NO;
+        _facebookLabel.alpha = .5;
     }
     
     NSURL *instagramURL = [NSURL URLWithString:@"instagram://app"];
     if (![[UIApplication sharedApplication] canOpenURL:instagramURL]) {
         _instagramButton.enabled = NO;
+        _instagramLabel.alpha = .5;
     }
 }
 
@@ -88,14 +98,25 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)close:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - Sharing
 - (IBAction)shareOnTwitter:(id)sender {
     SLComposeViewController *share = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
     [share addImage:self.fullImage];
     [share setInitialText:@" #hipstarapp"];
-    [share setCompletionHandler:^(SLComposeViewControllerResult result) {
-        NSLog(@"STatus: %u", result);
-    }];
+    
+    SLComposeViewControllerCompletionHandler completeHandler = ^(SLComposeViewControllerResult result) {
+        [share dismissViewControllerAnimated:YES completion:nil];
+        if (result == SLComposeViewControllerResultDone) {
+            _twitterButton.enabled = NO;
+            _twitterLabel.alpha = .5;
+        }
+    };
+    
+    [share setCompletionHandler:completeHandler];
     
     [self presentViewController:share animated:YES completion:nil];
 }
@@ -118,14 +139,28 @@
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         SLComposeViewController *share = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
         [share addImage:self.fullImage];
-        [share setCompletionHandler:^(SLComposeViewControllerResult result) {
-            NSLog(@"STatus: %u", result);
-        }];
+        
+        SLComposeViewControllerCompletionHandler completeHandler = ^(SLComposeViewControllerResult result) {
+            [share dismissViewControllerAnimated:YES completion:nil];
+            if (result == SLComposeViewControllerResultDone) {
+                _facebookButton.enabled = NO;
+                _facebookLabel.alpha = 0.5;
+            }
+        };
+        
+        [share setCompletionHandler:completeHandler];
         
         [self presentViewController:share animated:YES completion:nil];
     }
 }
 
+- (IBAction)done:(id)sender {
+    UIImageWriteToSavedPhotosAlbum(_fullImage, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+}
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo: (void *) contextInfo {
+    self.navigationController.view.userInteractionEnabled = NO;
+    [[UIApplication sharedApplication] keyWindow].rootViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CameraViewController"];
+}
 #pragma mark - UIDocumentInteractionControllerDelegate Implementation
 
 

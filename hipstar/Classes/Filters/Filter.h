@@ -16,6 +16,5 @@
 + (Filter *)filter;
 
 - (UIImage *)apply:(UIImage *)image;
-
-
+- (UIImage *)imageByApplyingAlpha:(UIImage *)image alpha:(CGFloat) alpha;
 @end

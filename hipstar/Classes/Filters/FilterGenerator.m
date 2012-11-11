@@ -8,6 +8,8 @@
 
 #import "FilterGenerator.h"
 
+#define SAFECOLOR(color) MIN(255,MAX(0,color))
+
 @implementation FilterGenerator
 
 CGContextRef BitmapContextCreateCopy(CGContextRef bitmapContext) {
@@ -42,7 +44,10 @@ CGContextRef BitmapContextCreateWithImage(UIImage *image, CGSize size) {
     CGContextRef context = CGBitmapContextCreate(nil, rect.size.width, rect.size.height, 8, 0, colorSpace, kCGImageAlphaPremultipliedFirst);
     CGColorSpaceRelease(colorSpace);
     
+    NSLog(@"%u", image.imageOrientation);
+    
     CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage, CGRectMake((image.size.height-image.size.width)/2, 0, image.size.width, image.size.height));
+    
     
     CGContextDrawImage(context, rect, imageRef);
     CGImageRelease(imageRef);
@@ -91,5 +96,33 @@ void BitmapContextCompositeWithCGImage(CGContextRef context, CGImageRef overlayI
 void BitmapContextRelease(CGContextRef context) {
     free(CGBitmapContextGetData(context));
 }
+
+CIImage *BitmapContextCreateCIImage(CGContextRef context);
+CIImage *BitmapContextCreateCIImage(CGContextRef context) {
+    CGImageRef image = CGBitmapContextCreateImage(context);
+    CIImage *outputImage = [CIImage imageWithCGImage:image];
+    CGImageRelease(image);
+    
+    return outputImage;
+}
+
+void BitmapContextSaturate(CGContextRef context, float amount) {
+    
+    CIImage *inImage = BitmapContextCreateCIImage(context);
+    
+    CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
+    
+    [filter setDefaults];
+    [filter setValue:inImage forKey:@"inputImage"];
+    [filter setValue:@(5) forKey:@"inputRadius"];
+    
+    CIContext *c = [CIContext contextWithEAGLContext:[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2]];
+    
+    CGImageRef image = [c createCGImage:filter.outputImage fromRect:[inImage extent]];
+    
+    BitmapContextCompositeWithCGImage(context, image, 1.0, kCGBlendModeNormal);
+    
+}
+
 
 @end

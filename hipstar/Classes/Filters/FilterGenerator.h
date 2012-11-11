@@ -19,4 +19,6 @@ void BitmapContextComposite(CGContextRef baseContext, CGContextRef overlayContex
 void BitmapContextCompositeImageNamed(CGContextRef context, NSString *imageName, float alpha, CGBlendMode blendMode);
 void BitmapContextCompositeWithCGImage(CGContextRef context, CGImageRef overlayImage, float alpha, CGBlendMode blendMode);
 
+void BitmapContextSaturate(CGContextRef context, float amount);
+
 @end

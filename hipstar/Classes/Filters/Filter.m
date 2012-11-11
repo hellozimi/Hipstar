@@ -14,8 +14,9 @@
     return [[self alloc] init];
 }
 
-- (void)apply:(CGContextRef)bitmapContext {
-    
+- (UIImage *)apply:(UIImage *)image {
+    return image;
 }
 
 @end
+

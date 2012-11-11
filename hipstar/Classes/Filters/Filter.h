@@ -9,10 +9,13 @@
 #import <Foundation/Foundation.h>
 
 #import "FilterGenerator.h"
+#import "GPUImage.h"
 
 @interface Filter : NSObject
 
 + (Filter *)filter;
-- (void)apply:(CGContextRef)bitmapContext;
+
+- (UIImage *)apply:(UIImage *)image;
+
 
 @end

@@ -8,9 +8,10 @@
 
 #import "FilterViewController.h"
 #import "FilterGenerator.h"
-
+#import "ShareViewController.h"
 #import "RedOverlay.h"
 #import "TurqoiseOverlay.h"
+#import "TestFilter.h"
 
 @interface FilterViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout> {
     CGContextRef _previewContext;
@@ -19,8 +20,21 @@
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *previewImageView;
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIImageView *arrow;
+@property (weak, nonatomic) IBOutlet UIButton *filterButton;
+@property (weak, nonatomic) IBOutlet UIButton *disortButton;
+
+@property (weak, nonatomic) IBOutlet UICollectionView *effectsCollectionView;
+@property (weak, nonatomic) IBOutlet UICollectionView *filterCollectionView;
+
+
+
 - (void)update;
+
+- (IBAction)back:(id)sender;
+- (IBAction)done:(id)sender;
+- (IBAction)disortButtonPressed:(id)sender;
+- (IBAction)filterButtonPressed:(id)sender;
 
 @end
 
@@ -38,7 +52,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    //[self.arrow setTranslatesAutoresizingMaskIntoConstraints:YES];
+    
+    
+    UIImageView *grayFilter = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_gray_filter"]];
+    CGRect frame;
+    
+    frame = grayFilter.frame;
+    frame.origin.y = 10;
+    frame.origin.x = 60;
+    self.filterCollectionView.clipsToBounds = NO;
+    [self.filterCollectionView addSubview:grayFilter];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,50 +81,60 @@
     
     double start = [NSDate timeIntervalSinceReferenceDate];
     
-    CGContextRef context = BitmapContextCreateCopy(_previewContext);
+    UIImage *img = [UIImage imageWithCGImage:CGBitmapContextCreateImage(_previewContext)];
     
     if (_currentFilter) {
-        [_currentFilter apply:context];
+        img = [_currentFilter apply:img];
     }
     
-    CGImageRef imageRef = CGBitmapContextCreateImage(context);
+    _previewImageView.image = img;
     
     double end = [NSDate timeIntervalSinceReferenceDate];
     
-    if (_currentFilter) {
-        
-        NSLog(@"Time to generate filter %@: %f", NSStringFromClass([_currentFilter class]), end-start);
-        
-    }
-    
-    
-    UIImage *originalImage = [UIImage imageWithCGImage:imageRef scale:1 orientation:UIImageOrientationRight];
-    CGImageRelease(imageRef);
-    
-    
-    _previewImageView.image = originalImage;
-    
-    if (!_currentFilter) {
-        BitmapContextRelease(context);
-        CGContextRelease(context);
-        return;
-    }
-    
-    CGContextRef exportContext = BitmapContextCreateWithImage(_originalImage, CGSizeMake(_originalImage.size.width, _originalImage.size.height));
-    
-    if (_currentFilter) {
-        [_currentFilter apply:exportContext];
-    }
-    CGImageRef o = CGBitmapContextCreateImage(exportContext);
-    BitmapContextRelease(context);
-    CGContextRelease(context);
-    
-    UIImage *eo = [UIImage imageWithCGImage:o scale:1 orientation:UIImageOrientationRight];
-    
-    UIImageWriteToSavedPhotosAlbum(eo, nil, nil, 0);
-    
-    CGImageRelease(o);
-    CGContextRelease(exportContext);
+    NSLog(@"Time to generate filter %@: %f", NSStringFromClass([_currentFilter class]), end-start);
+    return;
+    /*
+     CGImageRef imageRef = CGBitmapContextCreateImage(context);
+     
+     
+     if (_currentFilter) {
+     
+     NSLog(@"Time to generate filter %@: %f", NSStringFromClass([_currentFilter class]), end-start);
+     
+     }
+     
+     UIImage *originalImage = [UIImage imageWithCGImage:imageRef scale:1 orientation:_originalImage.imageOrientation];
+     CGImageRelease(imageRef);
+     
+     
+     _previewImageView.image = originalImage;
+     
+     if (!_currentFilter) {
+     BitmapContextRelease(context);
+     CGContextRelease(context);
+     return;
+     }
+     
+     BitmapContextRelease(context);
+     CGContextRelease(context);
+     */
+    /*
+     CGContextRef exportContext = BitmapContextCreateWithImage(_originalImage, CGSizeMake(_originalImage.size.width, _originalImage.size.height));
+     
+     if (_currentFilter) {
+     [_currentFilter apply:exportContext];
+     }
+     CGImageRef o = CGBitmapContextCreateImage(exportContext);
+     BitmapContextRelease(context);
+     CGContextRelease(context);
+     
+     UIImage *eo = [UIImage imageWithCGImage:o scale:1 orientation:UIImageOrientationRight];
+     
+     UIImageWriteToSavedPhotosAlbum(eo, nil, nil, 0);
+     
+     CGImageRelease(o);
+     CGContextRelease(exportContext);
+     */
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -109,8 +143,37 @@
 
 #pragma mark - Actions
 
+- (IBAction)done:(id)sender {
+    [self performSegueWithIdentifier:@"PresentShareViewController" sender:self];
+}
+
 - (IBAction)back:(id)sender {
     [self dismissViewControllerAnimated:NO completion:nil];
+}
+
+- (IBAction)disortButtonPressed:(id)sender {
+    
+    [sender setImage:[UIImage imageNamed:@"icon_disort_selected"] forState:UIControlStateNormal];
+    
+    [_filterButton setImage:[UIImage imageNamed:@"icon_filter"] forState:UIControlStateNormal];
+    
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        CGRect frame = self.arrow.frame;
+        frame.origin.x = 127;
+        self.arrow.frame = frame;
+    } completion:nil];
+}
+
+- (IBAction)filterButtonPressed:(id)sender {
+    
+    [_disortButton setImage:[UIImage imageNamed:@"icon_disort"] forState:UIControlStateNormal];
+    [sender setImage:[UIImage imageNamed:@"icon_filter_selected"] forState:UIControlStateNormal];
+    
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        CGRect frame = self.arrow.frame;
+        frame.origin.x = 179;
+        self.arrow.frame = frame;
+    } completion:nil];
 }
 
 #pragma mark - UICollectionViewFlowLayout
@@ -137,13 +200,12 @@
             _currentFilter = [TurqoiseOverlay filter];
             break;
         case 2:
-            _currentFilter = nil;
+            _currentFilter = [TestFilter filter];
             break;
     }
     
     [self update];
 }
-
 
 #pragma mark - UICollectionViewDataSource Implementation
 
@@ -153,9 +215,65 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FilterItem" forIndexPath:indexPath];
+    UICollectionViewCell *cell = nil;
+    
+    if (collectionView == self.filterCollectionView) {
+        
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FilterItem" forIndexPath:indexPath];
+    }
+    else if (collectionView == self.effectsCollectionView) {
+        
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"EffectItem" forIndexPath:indexPath];
+    }
     
     return cell;
+}
+
+#pragma mark - Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"PresentShareViewController"]) {
+        /*
+         UINavigationController *nc = segue.destinationViewController;
+         ShareViewController *vc = (ShareViewController *)[nc.viewControllers objectAtIndex:0];
+         vc.previewImage = _previewImageView.image;
+         
+         
+         CGContextRef context = BitmapContextCreateCopy(_previewContext);
+         
+         if (_currentFilter) {
+         [_currentFilter apply:context];
+         }
+         
+         CGImageRef imageRef = CGBitmapContextCreateImage(context);
+         
+         
+         UIImage *originalImage = [UIImage imageWithCGImage:imageRef scale:1 orientation:_originalImage.imageOrientation];
+         CGImageRelease(imageRef);
+         
+         
+         _previewImageView.image = originalImage;
+         
+         
+         CGContextRef exportContext = BitmapContextCreateWithImage(_originalImage, CGSizeMake(_originalImage.size.width, _originalImage.size.height));
+         
+         if (_currentFilter) {
+         [_currentFilter apply:exportContext];
+         }
+         CGImageRef o = CGBitmapContextCreateImage(exportContext);
+         BitmapContextRelease(context);
+         CGContextRelease(context);
+         
+         UIImage *full = [UIImage imageWithCGImage:o scale:1 orientation:UIImageOrientationRight];
+         
+         //UIImageWriteToSavedPhotosAlbum(eo, nil, nil, 0);
+         
+         CGImageRelease(o);
+         CGContextRelease(exportContext);
+         
+         vc.fullImage = full;
+         */
+    }
 }
 
 @end

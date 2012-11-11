@@ -224,10 +224,15 @@
 
 - (void)tapToFocus:(UITapGestureRecognizer *)recognizer {
     if ([self.device lockForConfiguration:nil]) {
-        CGPoint point = [self convertToPointOfInterestFromViewCoordinates:[recognizer locationInView:recognizer.view]];
         
-        [self.device setFocusPointOfInterest:point];
-        [self.device setFocusMode:AVCaptureFocusModeAutoFocus];
+        if ([self.device isFocusPointOfInterestSupported]) {
+            
+            CGPoint point = [self convertToPointOfInterestFromViewCoordinates:[recognizer locationInView:recognizer.view]];
+            
+            [self.device setFocusPointOfInterest:point];
+            [self.device setFocusMode:AVCaptureFocusModeAutoFocus];
+            
+        }
         
         [self.device unlockForConfiguration];
     }
@@ -336,9 +341,9 @@ UIImage *scaleAndRotateImage(UIImage *image)
     
     CGContextDrawImage(UIGraphicsGetCurrentContext(), CGRectMake(0, 0, width, height), imgRef);
     UIImage *imageCopy = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();  
+    UIGraphicsEndImageContext();
     
-    return imageCopy;  
+    return imageCopy;
 }
 
 - (void)snapshot:(id)sender {

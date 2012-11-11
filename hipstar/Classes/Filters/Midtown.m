@@ -60,13 +60,41 @@
     [base processImage];
     [gradient processImage];
     
-    image = [overlay imageFromCurrentlyProcessedOutput];
+    UIImage *gradientBlended = [overlay imageFromCurrentlyProcessedOutput];
+    
+    GPUImageOpacityFilter *opacity = [[GPUImageOpacityFilter alloc] init];
+    opacity.opacity = 0.5;
+    
+    gradientBlended = [opacity imageByFilteringImage:gradientBlended];
+    
+    
+    GPUImageAlphaBlendFilter *alpha = [[GPUImageAlphaBlendFilter alloc] init];
+    alpha.mix = 1.0;
+    
+    GPUImagePicture *bottom = [[GPUImagePicture alloc] initWithImage:image];
+    GPUImagePicture *top = [[GPUImagePicture alloc] initWithImage:gradientBlended];
+    
+    [bottom addTarget:alpha];
+    [top addTarget:alpha];
+    
+    [bottom processImage];
+    [top processImage];
+    
+    image = [alpha imageFromCurrentlyProcessedOutput];
+    
+    
+    //image = [overlay imageFromCurrentlyProcessedOutput];
     
     return image;
 }
 
 - (NSString *)name {
     return @"Midtown";
+}
+
+
+- (UIImage *)image {
+    return [UIImage imageNamed:@"Midtown"];
 }
 
 @end

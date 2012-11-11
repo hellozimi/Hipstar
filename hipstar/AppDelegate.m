@@ -14,6 +14,7 @@
     
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar_background"] forBarMetrics:UIBarMetricsDefault];
     
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     return YES;
 }
 

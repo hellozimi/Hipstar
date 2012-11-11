@@ -19,5 +19,6 @@
 - (UIImage *)imageByApplyingAlpha:(UIImage *)image alpha:(CGFloat) alpha;
 
 @property (nonatomic, weak, readonly) NSString *name;
+@property (nonatomic, weak, readonly) UIImage *image;
 
 @end

@@ -106,23 +106,4 @@ CIImage *BitmapContextCreateCIImage(CGContextRef context) {
     return outputImage;
 }
 
-void BitmapContextSaturate(CGContextRef context, float amount) {
-    
-    CIImage *inImage = BitmapContextCreateCIImage(context);
-    
-    CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
-    
-    [filter setDefaults];
-    [filter setValue:inImage forKey:@"inputImage"];
-    [filter setValue:@(5) forKey:@"inputRadius"];
-    
-    CIContext *c = [CIContext contextWithEAGLContext:[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2]];
-    
-    CGImageRef image = [c createCGImage:filter.outputImage fromRect:[inImage extent]];
-    
-    BitmapContextCompositeWithCGImage(context, image, 1.0, kCGBlendModeNormal);
-    
-}
-
-
 @end

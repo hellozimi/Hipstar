@@ -14,6 +14,8 @@
     UIImage *_generatedImage;
     BOOL _flashOn;
     BOOL _frontFacingCamera;
+    
+    Loader *_loader;
 }
 
 @property (nonatomic, strong) AVCaptureStillImageOutput *stillImageOutput;
@@ -155,6 +157,28 @@
         frame.origin.y = 5;
         self.cameraSwitchButton.frame = frame;
     }
+}
+
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [CATransaction setDisableActions:YES];
+    self.previewLayer.frame = self.captureView.layer.bounds;
+    [_session startRunning];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [_session stopRunning];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 
@@ -350,6 +374,7 @@ UIImage *scaleAndRotateImage(UIImage *image)
 }
 
 - (void)snapshot:(id)sender {
+    
     AVCaptureConnection *videoConnection = nil;
     for (AVCaptureConnection *connection in self.stillImageOutput.connections) {
         for (AVCaptureInputPort *port in [connection inputPorts]) {
@@ -372,6 +397,12 @@ UIImage *scaleAndRotateImage(UIImage *image)
     btn.userInteractionEnabled = NO;
     btn.enabled = NO;
     
+    if (_loader) {
+        [_loader hide];
+    }
+    
+    _loader = [Loader loader];
+    [_loader show];
     
     [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
         
@@ -437,27 +468,6 @@ UIImage *scaleAndRotateImage(UIImage *image)
     
     
     [self presentViewController:vc animated:YES completion:nil];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [CATransaction setDisableActions:YES];
-    self.previewLayer.frame = self.captureView.layer.bounds;
-    [_session startRunning];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [_session stopRunning];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - UIImagePickerControllerDelegate Implementation
@@ -573,6 +583,7 @@ UIImage *scaleAndRotateImage(UIImage *image)
     if ([segue.identifier isEqualToString:@"PresentFilterViewController"]) {
         FilterViewController *vc = segue.destinationViewController;
         vc.originalImage = _generatedImage;
+        [_loader hide];
     }
 }
 

@@ -225,13 +225,16 @@
 - (void)tapToFocus:(UITapGestureRecognizer *)recognizer {
     if ([self.device lockForConfiguration:nil]) {
         
+        CGPoint point = [self convertToPointOfInterestFromViewCoordinates:[recognizer locationInView:recognizer.view]];
+        
         if ([self.device isFocusPointOfInterestSupported]) {
-            
-            CGPoint point = [self convertToPointOfInterestFromViewCoordinates:[recognizer locationInView:recognizer.view]];
-            
             [self.device setFocusPointOfInterest:point];
             [self.device setFocusMode:AVCaptureFocusModeAutoFocus];
             
+        }
+        
+        if ([self.device isExposurePointOfInterestSupported]) {
+            [self.device setExposurePointOfInterest:point];
         }
         
         [self.device unlockForConfiguration];

@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface Loader : UIWindow
+@interface Loader : UIView
+
++ (Loader *)loader;
+
+- (void)show;
+- (void)hide;
 
 @end

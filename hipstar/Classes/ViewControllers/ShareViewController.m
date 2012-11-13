@@ -200,8 +200,8 @@
     Photo *photo = [Photo photo];
     photo.thumbnailPath = thumbnailPath;
     photo.largePath = largePath;
-    photo.filterName = self.filter.name;
-    photo.effectName = self.effect.name;
+    photo.filter = self.filter;
+    photo.effect = self.effect;
     
     [[StorageManager instance] savePhotoToGallery:photo];
     

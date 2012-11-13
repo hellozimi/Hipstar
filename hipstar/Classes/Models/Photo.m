@@ -7,6 +7,7 @@
 //
 
 #import "Photo.h"
+#import "Filter.h"
 
 @implementation Photo
 
@@ -16,8 +17,8 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if ((self = [super init])) {
-        self.filterName = [aDecoder decodeObjectForKey:@"filterName"];
-        self.effectName = [aDecoder decodeObjectForKey:@"effectName"];
+        self.filter = [aDecoder decodeObjectForKey:@"filter"];
+        self.effect = [aDecoder decodeObjectForKey:@"effect"];
         self.thumbnailPath = [aDecoder decodeObjectForKey:@"thumbnailPath"];
         self.largePath = [aDecoder decodeObjectForKey:@"largePath"];
     }
@@ -26,14 +27,14 @@
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-    [aCoder encodeObject:self.filterName forKey:@"filterName"];
-    [aCoder encodeObject:self.effectName forKey:@"effectName"];
+    [aCoder encodeObject:self.filter forKey:@"filter"];
+    [aCoder encodeObject:self.effect forKey:@"effect"];
     [aCoder encodeObject:self.thumbnailPath forKey:@"thumbnailPath"];
     [aCoder encodeObject:self.largePath forKey:@"largePath"];
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"[{ Filter: %@, Effect: %@ }, { Thumbnail: %@, Large: %@ }]", self.filterName, self.effectName, self.thumbnailPath, self.largePath];
+    return [NSString stringWithFormat:@"[{ Filter: %@, Effect: %@ }, { Thumbnail: %@, Large: %@ }]", self.filter.name, self.effect.name, self.thumbnailPath, self.largePath];
 }
 
 @end

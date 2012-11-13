@@ -49,6 +49,8 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *border;
 
+@property (weak, nonatomic) IBOutlet UIButton *closeButton;
+@property (weak, nonatomic) IBOutlet UIButton *nextButton;
 
 - (void)update;
 
@@ -86,6 +88,8 @@
     _lastSelectedEffectIndex = _lastSelectedFilterIndex = -1;
     
     _border.top += 0.5;
+    
+    self.nextButton.exclusiveTouch = self.closeButton.exclusiveTouch = YES;
     
     _currentSelectedEffectIndex = _currentSelectedFilterIndex = 0;
     [self update];

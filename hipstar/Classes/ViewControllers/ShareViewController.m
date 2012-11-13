@@ -58,6 +58,8 @@
     else {
         self.navigationItem.rightBarButtonItem = nil;
     }
+    
+    self.twitterButton.exclusiveTouch = self.instagramButton.exclusiveTouch = self.facebookButton.exclusiveTouch = self.doneButton.exclusiveTouch = YES;
 }
 
 - (void)setFullImage:(UIImage *)fullImage {

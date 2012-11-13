@@ -128,7 +128,7 @@
 
 - (void)setOriginalImage:(UIImage *)originalImage {
     _originalImage = originalImage;
-    _previewImage = [self resizeImage:_originalImage newSize:CGSizeMake(150, 150)];
+    _previewImage = [self resizeImage:_originalImage newSize:CGSizeMake(200, 200)];
     
 }
 

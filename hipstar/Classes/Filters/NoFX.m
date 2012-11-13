@@ -11,7 +11,7 @@
 @implementation NoFX
 
 - (NSString *)name {
-    return @"No FX";
+    return @"None";
 }
 
 - (UIImage *)image {

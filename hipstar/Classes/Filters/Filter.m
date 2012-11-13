@@ -7,11 +7,34 @@
 //
 
 #import "Filter.h"
+#import "NoFX.h"
 
 @implementation Filter
 
 + (id)filter {
     return [[self alloc] init];
+}
+
++ (NSString *)nameForFilter:(Filter *)filter effect:(Filter *)effect {
+    
+    NSString *name = nil;
+    if ([filter isKindOfClass:[NoFX class]] && [effect isKindOfClass:[NoFX class]]) {
+        name = @"None";
+    }
+    else {
+        if (![filter isKindOfClass:[NoFX class]] && ![effect isKindOfClass:[NoFX class]]) {
+            name = [NSString stringWithFormat:@"%@ ♥ %@", effect.name, filter.name];
+        }
+        else {
+            if ([filter isKindOfClass:[NoFX class]]) {
+                name = effect.name;
+            }
+            else {
+                name = filter.name;
+            }
+        }
+    }
+    return name;
 }
 
 - (UIImage *)apply:(UIImage *)image {
@@ -38,6 +61,16 @@
     UIGraphicsEndImageContext();
     
     return newImage;
+}
+
+
+#pragma mark - Coding
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    return [super init];
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    
 }
 
 @end

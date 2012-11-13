@@ -11,9 +11,11 @@
 #import "FilterGenerator.h"
 #import "GPUImage.h"
 
-@interface Filter : NSObject
+@interface Filter : NSObject <NSCoding>
 
 + (Filter *)filter;
+
++ (NSString *)nameForFilter:(Filter *)filter effect:(Filter *)effect;
 
 - (UIImage *)apply:(UIImage *)image;
 - (UIImage *)imageByApplyingAlpha:(UIImage *)image alpha:(CGFloat) alpha;

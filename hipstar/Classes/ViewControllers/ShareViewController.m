@@ -59,6 +59,9 @@
         self.navigationItem.rightBarButtonItem = nil;
     }
     
+    self.navigationItem.leftBarButtonItem.customView.exclusiveTouch = YES;
+    self.navigationItem.rightBarButtonItem.customView.exclusiveTouch = YES;
+    
     self.twitterButton.exclusiveTouch = self.instagramButton.exclusiveTouch = self.facebookButton.exclusiveTouch = self.doneButton.exclusiveTouch = YES;
 }
 

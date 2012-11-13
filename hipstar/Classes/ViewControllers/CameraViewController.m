@@ -105,7 +105,7 @@
     [super viewDidLoad];
     
     self.session = [[AVCaptureSession alloc] init];
-    self.session.sessionPreset = AVCaptureSessionPresetHigh;
+    self.session.sessionPreset = AVCaptureSessionPresetPhoto;
     
     CALayer *layer = self.captureView.layer;
     

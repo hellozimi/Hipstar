@@ -92,6 +92,10 @@
     self.nextButton.exclusiveTouch = self.closeButton.exclusiveTouch = YES;
     
     _currentSelectedEffectIndex = _currentSelectedFilterIndex = 0;
+    
+    _currentEffect = [NoFX filter];
+    _currentFilter = [NoFX filter];
+    
     [self update];
 }
 

@@ -145,7 +145,7 @@
 - (IBAction)shareOnTwitter:(id)sender {
     SLComposeViewController *share = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
     [share addImage:self.fullImage];
-    [share setInitialText:@" #hipstarapp"];
+    [share setInitialText:[NSString stringWithFormat:@" - %@ with #hipstarapp", [Filter nameForFilter:self.filter effect:self.effect]]];
     
     SLComposeViewControllerCompletionHandler completeHandler = ^(SLComposeViewControllerResult result) {
         [share dismissViewControllerAnimated:YES completion:nil];
@@ -178,6 +178,8 @@
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         SLComposeViewController *share = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
         [share addImage:self.fullImage];
+        [share setInitialText:[NSString stringWithFormat:@" - %@ with hipstarapp", [Filter nameForFilter:self.filter effect:self.effect]]];
+        
         
         SLComposeViewControllerCompletionHandler completeHandler = ^(SLComposeViewControllerResult result) {
             [share dismissViewControllerAnimated:YES completion:nil];

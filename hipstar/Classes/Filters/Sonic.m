@@ -13,7 +13,7 @@
 - (UIImage *)apply:(UIImage *)image {
     
     GPUImageAlphaBlendFilter *alpha = [[GPUImageAlphaBlendFilter alloc] init];
-    alpha.mix = 1;
+    alpha.mix = 0.6;
     UIImage *sonicOverlay = [UIImage imageNamed:@"sonic_overlay"];
     
     GPUImagePicture *bottom = [[GPUImagePicture alloc] initWithImage:image];

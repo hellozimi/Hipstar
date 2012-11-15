@@ -79,7 +79,7 @@ CGPathRef PathCreateHexagonWithSize(CGPoint center, float size) {
 }
 
 - (UIImage *)image {
-    return [UIImage imageNamed:@"Hexagon"];
+    return [UIImage imageNamed:@"hexagon"];
 }
 
 @end

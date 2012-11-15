@@ -140,7 +140,7 @@
 }
 
 - (UIImage *)image {
-    return [UIImage imageNamed:@"Falling"];
+    return [UIImage imageNamed:@"falling"];
 }
 
 @end

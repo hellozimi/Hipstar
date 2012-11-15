@@ -61,27 +61,44 @@
     
     image = [alphaBlend imageFromCurrentlyProcessedOutput];
     
+    GPUImagePicture *filterCompiler = [[GPUImagePicture alloc] initWithImage:image];
+    
     GPUImageColorBalanceFilter *colorBalance = [[GPUImageColorBalanceFilter alloc] init];
     GPUVector3 midtones;
-    midtones.one = 0.43;
+    midtones.one = 0.22;
     midtones.two = 0.0;
     midtones.three = 0.09;
     [colorBalance setMidtones:midtones];
     
-    image = [colorBalance imageByFilteringImage:image];
     
     
     GPUImageHueFilter *hue = [[GPUImageHueFilter alloc] init];
-    hue.hue = 3;
+    hue.hue = 0;
     
-    image = [hue imageByFilteringImage:image];
     
     GPUImageSaturationFilter *saturate = [[GPUImageSaturationFilter alloc] init];
     saturate.saturation = 0.8;
     
-    image = [saturate imageByFilteringImage:image];
+    [filterCompiler addTarget:colorBalance];
+    [colorBalance addTarget:hue];
+    [hue addTarget:saturate];
     
-    return image;
+    [filterCompiler processImage];
+    
+    image = [colorBalance imageFromCurrentlyProcessedOutput];
+    
+    GPUImagePicture *overlay = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"radial_gradient_40"] smoothlyScaleOutput:YES];
+    bottom = [[GPUImagePicture alloc] initWithImage:image];
+    GPUImageOverlayBlendFilter *gradientOverlay = [[GPUImageOverlayBlendFilter alloc] init];
+    [bottom addTarget:gradientOverlay];
+    [overlay addTarget:gradientOverlay];
+    
+    [bottom processImage];
+    [overlay processImage];
+    
+    
+    
+    return [gradientOverlay imageFromCurrentlyProcessedOutput];
 }
 
 - (NSString *)name {

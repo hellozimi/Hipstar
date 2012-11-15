@@ -15,8 +15,12 @@
 #import "NoFX.h"
 #import "Midtown.h"
 #import "Chipper.h"
+#import "Deck.h"
 #import "Sepia.h"
 #import "Kale.h"
+#import "Frado.h"
+#import "Jug.h"
+#import "Frapp.h"
 
 // Distort
 #import "Mirror.h"
@@ -74,10 +78,14 @@
     
     _filters = [NSMutableArray arrayWithArray:@[
                 [NoFX filter],
+                [Frado filter],
                 [Midtown filter],
+                [Deck filter],
                 [Chipper filter],
                 [Sepia filter],
                 [Kale filter],
+                [Jug filter],
+                [Frapp filter]
                 ]];
     
     _effects = [NSMutableArray arrayWithArray:@[
@@ -86,8 +94,8 @@
                 [Sonic filter],
                 [Blog filter],
                 [Target filter],
-                [Falling filter],
                 [Square filter],
+                [Falling filter],
                 [Circle filter],
                 [Hexagon filter]
                 ]];

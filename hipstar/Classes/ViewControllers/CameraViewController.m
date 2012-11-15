@@ -463,11 +463,11 @@ UIImage *scaleAndRotateImage(UIImage *image)
         
         UIImage *imageToCrop = [UIImage imageWithData:imageData];
         float y = (imageToCrop.size.height - imageToCrop.size.width) / 2;
-        
+        float ratio = imageToCrop.size.width/1080;
         // Magic ratio
-        float padding = 20 * 1.6875;
+        float padding = 20 * (ratio*2);
         
-        UIImage *baseImage = [self cropImage:imageToCrop cropRect:CGRectMake(padding, y +padding, imageToCrop.size.width - (padding * 2), imageToCrop.size.width - (padding*2)) aspectFitBounds:CGSizeMake(1080, 1080) fillColor:[UIColor blackColor]];
+        UIImage *baseImage = [self cropImage:imageToCrop cropRect:CGRectMake(padding, y+padding, imageToCrop.size.width - (padding * 2), imageToCrop.size.width - (padding*2)) aspectFitBounds:CGSizeMake(1080, 1080) fillColor:[UIColor blackColor]];
         
         _generatedImage = baseImage;
         

@@ -23,9 +23,36 @@
     
     CGContextClip(context);
     
+    
+    ///// FILTERING
+    
+    GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:image];
+    
+    // Brightness
+    GPUImageBrightnessFilter *brightness = [[GPUImageBrightnessFilter alloc] init];
+    brightness.brightness = 0.1;
+    
+    // Contrast
+    GPUImageContrastFilter *contrast = [[GPUImageContrastFilter alloc] init];
+    contrast.contrast = 1.2;
+    
+    // Saturation
+    GPUImageSaturationFilter *saturation = [[GPUImageSaturationFilter alloc] init];
+    saturation.saturation = 1.2;
+    
+    
+    [picture addTarget:brightness];
+    [brightness addTarget:contrast];
+    [contrast addTarget:saturation];
+    
+    [picture processImage];
+    
+    UIImage *computedImage = [saturation imageFromCurrentlyProcessedOutput];
+    
+    
     CGContextTranslateCTM(context, rect.size.width, 0);
     CGContextScaleCTM(context, -1, 1);
-    CGContextDrawImage(context, rect, image.CGImage);
+    CGContextDrawImage(context, rect, computedImage.CGImage);
     
         
     CGImageRef img = CGBitmapContextCreateImage(context);

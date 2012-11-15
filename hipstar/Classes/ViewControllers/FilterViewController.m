@@ -22,6 +22,11 @@
 #import "Mirror.h"
 #import "Sonic.h"
 #import "Target.h"
+#import "Circle.h"
+#import "Falling.h"
+#import "Blog.h"
+#import "Square.h"
+#import "Hexagon.h"
 
 @interface FilterViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout> {
     UIImage *_previewImage;
@@ -79,7 +84,12 @@
                 [NoFX filter],
                 [Mirror filter],
                 [Sonic filter],
-                [Target filter]
+                [Blog filter],
+                [Target filter],
+                [Falling filter],
+                [Square filter],
+                [Circle filter],
+                [Hexagon filter]
                 ]];
     
     _previewImageView.layer.cornerRadius = 4;
@@ -160,6 +170,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     [self update];
 }
 

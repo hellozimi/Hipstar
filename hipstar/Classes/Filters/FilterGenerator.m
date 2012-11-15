@@ -44,8 +44,6 @@ CGContextRef BitmapContextCreateWithImage(UIImage *image, CGSize size) {
     CGContextRef context = CGBitmapContextCreate(nil, rect.size.width, rect.size.height, 8, 0, colorSpace, kCGImageAlphaPremultipliedFirst);
     CGColorSpaceRelease(colorSpace);
     
-    NSLog(@"%u", image.imageOrientation);
-    
     CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage, CGRectMake((image.size.height-image.size.width)/2, 0, image.size.width, image.size.height));
     
     

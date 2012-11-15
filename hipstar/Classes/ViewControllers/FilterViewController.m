@@ -10,6 +10,7 @@
 #import "FilterGenerator.h"
 #import "ShareViewController.h"
 #import "FilterCollectionViewCell.h"
+#import "Loader.h"
 
 // Filter
 #import "NoFX.h"
@@ -46,8 +47,10 @@
     
     NSMutableArray *_filters;
     NSMutableArray *_effects;
+    Loader *_loader;
 }
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @property (weak, nonatomic) IBOutlet UIImageView *previewImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *arrow;
 @property (weak, nonatomic) IBOutlet UIButton *filterButton;
@@ -115,6 +118,12 @@
     _currentFilter = [NoFX filter];
     
     [self update];
+    
+    
+    _spinner.layer.shadowColor = [UIColor blackColor].CGColor;
+    _spinner.layer.shadowOffset = CGSizeMake(0, 1);
+    _spinner.layer.shadowOpacity = 0.5;
+    _spinner.layer.shadowRadius = 0;
 }
 
 - (void)didReceiveMemoryWarning
@@ -156,23 +165,30 @@
 
 - (void)update {
     
-    double start = [NSDate timeIntervalSinceReferenceDate];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        double start = [NSDate timeIntervalSinceReferenceDate];
+        
+        UIImage *img = _previewImage;
+        
+        if (_currentFilter) {
+            img = [_currentFilter apply:_previewImage];
+        }
+        
+        
+        if (_currentEffect) {
+            img = [_currentEffect apply:img];
+        }
+        _previewImageView.image = img;
+        
+        double end = [NSDate timeIntervalSinceReferenceDate];
+        if (0) {
+            NSLog(@"Time to generate filter %@ & effect %@ — %f", _currentFilter.name, _currentEffect.name, end-start);
+        }
+        
+        self.spinner.hidden = YES;
+    });
     
-    UIImage *img = _previewImage;
-    
-    if (_currentFilter) {
-        img = [_currentFilter apply:_previewImage];
-    }
-    
-    
-    if (_currentEffect) {
-        img = [_currentEffect apply:img];
-    }
-    _previewImageView.image = img;
-    
-    double end = [NSDate timeIntervalSinceReferenceDate];
-    
-    NSLog(@"Time to generate filter %@ & effect %@ — %f", _currentFilter.name, _currentEffect.name, end-start);
     return;
 }
 
@@ -190,6 +206,19 @@
 #pragma mark - Actions
 
 - (IBAction)done:(id)sender {
+    
+    if (_loader) {
+        [_loader hide];
+    }
+    
+    _loader = [Loader loader];
+    [_loader show];
+    
+    [self performSelector:@selector(doneTimed) withObject:nil afterDelay:0.5];
+}
+
+- (void)doneTimed {
+    
     [self performSegueWithIdentifier:@"PresentShareViewController" sender:self];
 }
 
@@ -276,7 +305,7 @@
         _currentEffect = [_effects objectAtIndex:indexPath.row];
         
     }
-    
+    _spinner.hidden = NO;
     [self update];
 }
 
@@ -338,6 +367,8 @@
         vc.fullImage = full;
         vc.filter = _currentFilter;
         vc.effect = _currentEffect;
+        
+        [_loader hide];
     }
 }
 

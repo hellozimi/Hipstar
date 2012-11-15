@@ -9,6 +9,7 @@
 #import "CameraViewController.h"
 #import "FilterViewController.h"
 #import "Globals.h"
+#import "Loader.h"
 
 @interface CameraViewController () <AVCaptureVideoDataOutputSampleBufferDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
     UIImage *_generatedImage;
@@ -16,6 +17,11 @@
     BOOL _frontFacingCamera;
     
     Loader *_loader;
+    
+    UIImageView *_snappedImageView;
+    
+    BOOL _shouldCaptureNextFrame;
+    
 }
 
 @property (nonatomic, strong) AVCaptureStillImageOutput *stillImageOutput;
@@ -27,6 +33,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *snap;
 @property (weak, nonatomic) IBOutlet UIButton *flashButton;
 @property (weak, nonatomic) IBOutlet UIButton *cameraSwitchButton;
+@property (weak, nonatomic) IBOutlet UIButton *galleryButton;
+@property (weak, nonatomic) IBOutlet UIButton *importButton;
 
 @end
 
@@ -134,14 +142,30 @@
     
     [self.snap addTarget:self action:@selector(snapshot:) forControlEvents:UIControlEventTouchUpInside];
     
+    
+    AVCaptureVideoDataOutput * dataOutput = [[AVCaptureVideoDataOutput alloc] init];
+    [dataOutput setAlwaysDiscardsLateVideoFrames:YES];
+    [dataOutput setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];
+    
+    [dataOutput setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
+    
+    [self.session addOutput:dataOutput];
+    
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToFocus:)];
     [self.captureView addGestureRecognizer:tap];
-    
     
     if ([self.device lockForConfiguration:nil]) {
         [self.device setFocusMode:AVCaptureFocusModeAutoFocus];
         [self.device unlockForConfiguration];
     }
+    
+    _snappedImageView = [[UIImageView alloc] init];
+    _snappedImageView.hidden = YES;
+    [self.view insertSubview:_snappedImageView aboveSubview:self.captureView];
+    
+    
+    self.snap.exclusiveTouch = self.flashButton.exclusiveTouch = self.cameraSwitchButton.exclusiveTouch = self.importButton.exclusiveTouch = self.galleryButton.exclusiveTouch = YES;
 }
 
 - (void)viewDidLayoutSubviews {
@@ -157,6 +181,8 @@
         frame.origin.y = 5;
         self.cameraSwitchButton.frame = frame;
     }
+    
+    _snappedImageView.frame = self.captureView.frame;
 }
 
 
@@ -170,6 +196,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    _snappedImageView.hidden = YES;
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
 }
 
@@ -183,6 +210,21 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
+
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+    
+    if (_shouldCaptureNextFrame) {
+        _shouldCaptureNextFrame = NO;
+        _snappedImageView.hidden = NO;
+        
+        CVPixelBufferRef pixelBuffer = (CVPixelBufferRef)CMSampleBufferGetImageBuffer(sampleBuffer);
+        CIImage *ciimage = [CIImage imageWithCVPixelBuffer:pixelBuffer];
+        
+        UIImage *image = [UIImage imageWithCIImage:ciimage scale:2 orientation:UIImageOrientationRight];
+        
+        _snappedImageView.image = image;}
+}
 
 #pragma mark - Actions
 
@@ -406,6 +448,8 @@ UIImage *scaleAndRotateImage(UIImage *image)
     _loader = [Loader loader];
     [_loader show];
     
+    _shouldCaptureNextFrame = YES;
+    
     [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
         
         btn.userInteractionEnabled = YES;
@@ -571,10 +615,18 @@ UIImage *scaleAndRotateImage(UIImage *image)
     
     UIImage *originalImage = [info objectForKey:UIImagePickerControllerOriginalImage];
     CGRect cropRect = [[info objectForKey:UIImagePickerControllerCropRect] CGRectValue];
+    
+    if (_loader) {
+        [_loader hide];
+    }
+    
+    _loader = [Loader loader];
+    [_loader show];
+    
     [self dismissViewControllerAnimated:YES completion:^{
         
         _generatedImage = [self cropImage:originalImage cropRect:cropRect aspectFitBounds:CGSizeMake(1080, 1080) fillColor:[UIColor blackColor]];
-        
+        _shouldCaptureNextFrame = YES;
         [self performSegueWithIdentifier:@"PresentFilterViewController" sender:self];
     }];
 }

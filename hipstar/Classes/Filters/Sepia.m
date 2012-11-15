@@ -12,7 +12,7 @@
 
 - (UIImage *)apply:(UIImage *)image {
     GPUImageSepiaFilter *sepia = [[GPUImageSepiaFilter alloc] init];
-    sepia.intensity = 0.8;
+    sepia.intensity = 0.9;
     return [sepia imageByFilteringImage:image];
 }
 

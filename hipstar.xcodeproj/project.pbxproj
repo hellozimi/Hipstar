@@ -54,9 +54,9 @@
 		F447D29616558E87008CDC51 /* hexagon.png in Resources */ = {isa = PBXBuildFile; fileRef = F447D29416558E87008CDC51 /* hexagon.png */; };
 		F447D29716558E87008CDC51 /* hexagon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F447D29516558E87008CDC51 /* hexagon@2x.png */; };
 		F447D2A516558FEE008CDC51 /* Frapp.m in Sources */ = {isa = PBXBuildFile; fileRef = F447D2A416558FEE008CDC51 /* Frapp.m */; };
-		F4AC52401655928000CCC801 /* jug_filter.png in Resources */ = {isa = PBXBuildFile; fileRef = F4AC523F1655928000CCC801 /* jug_filter.png */; };
 		F4AC5243165594F200CCC801 /* falling.png in Resources */ = {isa = PBXBuildFile; fileRef = F4AC5241165594F200CCC801 /* falling.png */; };
 		F4AC5244165594F200CCC801 /* falling@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4AC5242165594F200CCC801 /* falling@2x.png */; };
+		F4AC52551655A27B00CCC801 /* jug_filter.png in Resources */ = {isa = PBXBuildFile; fileRef = F4AC52541655A27B00CCC801 /* jug_filter.png */; };
 		F4B2544E164F40DE00693375 /* border_scale.png in Resources */ = {isa = PBXBuildFile; fileRef = F4B2544C164F40DE00693375 /* border_scale.png */; };
 		F4B2544F164F40DE00693375 /* border_scale@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4B2544D164F40DE00693375 /* border_scale@2x.png */; };
 		F4B25452164F424000693375 /* FilterCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B25451164F424000693375 /* FilterCollectionViewCell.m */; };
@@ -256,9 +256,9 @@
 		F447D29516558E87008CDC51 /* hexagon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hexagon@2x.png"; sourceTree = "<group>"; };
 		F447D2A316558FEE008CDC51 /* Frapp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frapp.h; sourceTree = "<group>"; };
 		F447D2A416558FEE008CDC51 /* Frapp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frapp.m; sourceTree = "<group>"; };
-		F4AC523F1655928000CCC801 /* jug_filter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jug_filter.png; sourceTree = "<group>"; };
 		F4AC5241165594F200CCC801 /* falling.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = falling.png; sourceTree = "<group>"; };
 		F4AC5242165594F200CCC801 /* falling@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "falling@2x.png"; sourceTree = "<group>"; };
+		F4AC52541655A27B00CCC801 /* jug_filter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jug_filter.png; sourceTree = "<group>"; };
 		F4B2544C164F40DE00693375 /* border_scale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border_scale.png; sourceTree = "<group>"; };
 		F4B2544D164F40DE00693375 /* border_scale@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "border_scale@2x.png"; sourceTree = "<group>"; };
 		F4B25450164F424000693375 /* FilterCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterCollectionViewCell.h; sourceTree = "<group>"; };
@@ -499,7 +499,7 @@
 		F4B2548D164F6ADC00693375 /* Filter */ = {
 			isa = PBXGroup;
 			children = (
-				F4AC523F1655928000CCC801 /* jug_filter.png */,
+				F4AC52541655A27B00CCC801 /* jug_filter.png */,
 				F447D28716558199008CDC51 /* radial_gradient_40.png */,
 				F4B254F2164FFD9200693375 /* sonic_overlay.png */,
 				F4B2548E164F6ADC00693375 /* midtown_overlay.jpg */,
@@ -999,9 +999,9 @@
 				F447D29316558E5E008CDC51 /* Jug@2x.png in Resources */,
 				F447D29616558E87008CDC51 /* hexagon.png in Resources */,
 				F447D29716558E87008CDC51 /* hexagon@2x.png in Resources */,
-				F4AC52401655928000CCC801 /* jug_filter.png in Resources */,
 				F4AC5243165594F200CCC801 /* falling.png in Resources */,
 				F4AC5244165594F200CCC801 /* falling@2x.png in Resources */,
+				F4AC52551655A27B00CCC801 /* jug_filter.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1134,11 +1134,13 @@
 		F4BF1311164D5E1800879A13 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Simon Andersson";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "hipstar/hipstar-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/GPUImage/Source/GPUImage.h\"";
 				INFOPLIST_FILE = "hipstar/hipstar-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "389AC493-04BA-4FFE-9AE8-5CEA8C15B5BD";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

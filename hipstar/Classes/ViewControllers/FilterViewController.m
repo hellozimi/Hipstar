@@ -171,14 +171,15 @@
         
         UIImage *img = _previewImage;
         
-        if (_currentFilter) {
-            img = [_currentFilter apply:_previewImage];
-        }
-        
-        
         if (_currentEffect) {
             img = [_currentEffect apply:img];
         }
+        
+        if (_currentFilter) {
+            img = [_currentFilter apply:img];
+        }
+        
+        
         _previewImageView.image = img;
         
         double end = [NSDate timeIntervalSinceReferenceDate];

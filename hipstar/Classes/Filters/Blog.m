@@ -19,11 +19,18 @@
     float offset = rect.size.width * 0.076;
     
     CGContextSaveGState(context);
-    
     CGContextSetFillColorWithColor(context, [[UIColor whiteColor] colorWithAlphaComponent:0.11].CGColor);
     CGContextSetBlendMode(context, kCGBlendModeScreen);
     CGContextFillRect(context, rect);
     CGContextRestoreGState(context);
+    
+    CGContextSaveGState(context);
+    CGContextSetFillColorWithColor(context, [[UIColor whiteColor] colorWithAlphaComponent:0.06].CGColor);
+    CGContextSetBlendMode(context, kCGBlendModeOverlay);
+    CGContextFillRect(context, rect);
+    CGContextRestoreGState(context);
+    
+    
     
     CGContextSaveGState(context);
     CGContextDrawImage(context, CGRectInset(rect, offset, offset), image.CGImage);

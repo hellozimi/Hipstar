@@ -12,20 +12,31 @@
 
 - (UIImage *)apply:(UIImage *)image {
     
-    GPUImageAlphaBlendFilter *alpha = [[GPUImageAlphaBlendFilter alloc] init];
-    alpha.mix = 0.6;
     UIImage *sonicOverlay = [UIImage imageNamed:@"sonic_overlay"];
     
-    GPUImagePicture *bottom = [[GPUImagePicture alloc] initWithImage:image];
-    GPUImagePicture *top = [[GPUImagePicture alloc] initWithImage:sonicOverlay smoothlyScaleOutput:YES];
     
-    [bottom addTarget:alpha];
-    [top addTarget:alpha];
+    CGContextRef context = BitmapContextCreateWithImage(image, image.size);
+    float scale = [UIScreen mainScreen].scale;
+    CGRect rect = CGRectMake(0, 0, image.size.width*scale, image.size.height*scale);
     
-    [bottom processImage];
-    [top processImage];
     
-    image = [alpha imageFromCurrentlyProcessedOutput];
+    CGContextDrawImage(context, rect, image.CGImage);
+    
+    CGContextSaveGState(context);
+    CGContextSetBlendMode(context, kCGBlendModeScreen);
+    CGContextSetAlpha(context, 0.5);
+    CGContextDrawImage(context, rect, sonicOverlay.CGImage);
+    CGContextRestoreGState(context);
+    
+    CGContextSaveGState(context);
+    CGContextSetBlendMode(context, kCGBlendModeOverlay);
+    CGContextSetAlpha(context, 0.5);
+    CGContextDrawImage(context, rect, sonicOverlay.CGImage);
+    CGContextRestoreGState(context);
+    
+    image = BitmapImageCreateFromContext(context);
+    
+    CGContextRelease(context);
     
     return image;
 }

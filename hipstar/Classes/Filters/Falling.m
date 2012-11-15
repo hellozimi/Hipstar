@@ -114,8 +114,8 @@
                                                    0,
                                                    colorSpace,
                                                    kCGImageAlphaPremultipliedFirst);
-    CGContextSetAllowsAntialiasing(bmContext, FALSE);
-    CGContextSetInterpolationQuality(bmContext, kCGInterpolationNone);
+    CGContextSetAllowsAntialiasing(bmContext, TRUE);
+    CGContextSetInterpolationQuality(bmContext, kCGInterpolationHigh);
     CGColorSpaceRelease(colorSpace);
     CGContextTranslateCTM(bmContext,
                           +(rotatedRect.size.width/2),

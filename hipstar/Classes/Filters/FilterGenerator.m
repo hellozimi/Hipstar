@@ -93,6 +93,16 @@ void BitmapContextCompositeWithCGImage(CGContextRef context, CGImageRef overlayI
     
 }
 
+UIImage *BitmapImageCreateFromContext(CGContextRef context) {
+    
+    CGImageRef img = CGBitmapContextCreateImage(context);
+    
+    UIImage *image = [UIImage imageWithCGImage:img];
+    CGImageRelease(img);
+    
+    return image;
+}
+
 void BitmapContextRelease(CGContextRef context) {
     free(CGBitmapContextGetData(context));
 }

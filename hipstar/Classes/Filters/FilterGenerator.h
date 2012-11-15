@@ -18,5 +18,5 @@ void BitmapContextRelease(CGContextRef context);
 void BitmapContextComposite(CGContextRef baseContext, CGContextRef overlayContext, float alpha, CGBlendMode blendMode);
 void BitmapContextCompositeImageNamed(CGContextRef context, NSString *imageName, float alpha, CGBlendMode blendMode);
 void BitmapContextCompositeWithCGImage(CGContextRef context, CGImageRef overlayImage, float alpha, CGBlendMode blendMode);
-
+UIImage *BitmapImageCreateFromContext(CGContextRef context);
 @end

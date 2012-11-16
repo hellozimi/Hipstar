@@ -12,7 +12,7 @@
 
 - (UIImage *)apply:(UIImage *)image {
     
-    
+    /*
     // Contrast 27
     GPUImageContrastFilter *contrast = [[GPUImageContrastFilter alloc] init];
     contrast.contrast = 1.27;
@@ -82,8 +82,46 @@
     
     image = [alpha imageFromCurrentlyProcessedOutput];
     
+    */
     
-    //image = [overlay imageFromCurrentlyProcessedOutput];
+    image = [self applyLookup:@"midtown_lookup_filter_1" image:image];
+    image = [self applyLookup:@"midtown_lookup_filter_2" image:image];
+    image = [self applyLookup:@"midtown_lookup_filter_3" image:image];
+    image = [self applyLookup:@"midtown_lookup_filter_4" image:image];
+    
+    
+    GPUImageOverlayBlendFilter *overlay = [[GPUImageOverlayBlendFilter alloc] init];
+    GPUImagePicture *base = [[GPUImagePicture alloc] initWithImage:image smoothlyScaleOutput:NO];
+    
+    GPUImagePicture *gradient = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"full_gradient.jpg"] smoothlyScaleOutput:YES];
+    
+    [base addTarget:overlay];
+    [gradient addTarget:overlay];
+    
+    [base processImage];
+    [gradient processImage];
+    
+    UIImage *gradientBlended = [overlay imageFromCurrentlyProcessedOutput];
+    
+    GPUImageOpacityFilter *opacity = [[GPUImageOpacityFilter alloc] init];
+    opacity.opacity = 0.5;
+    
+    gradientBlended = [opacity imageByFilteringImage:gradientBlended];
+    
+    
+    GPUImageAlphaBlendFilter *alpha = [[GPUImageAlphaBlendFilter alloc] init];
+    alpha.mix = 1.0;
+    
+    GPUImagePicture *bottom = [[GPUImagePicture alloc] initWithImage:image];
+    GPUImagePicture *top = [[GPUImagePicture alloc] initWithImage:gradientBlended];
+    
+    [bottom addTarget:alpha];
+    [top addTarget:alpha];
+    
+    [bottom processImage];
+    [top processImage];
+    
+    image = [alpha imageFromCurrentlyProcessedOutput];
     
     return image;
 }

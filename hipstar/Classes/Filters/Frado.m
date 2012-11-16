@@ -12,6 +12,7 @@
 
 - (UIImage *)apply:(UIImage *)image {
     
+    /*
     
     GPUImageToneCurveFilter *curves = [[GPUImageToneCurveFilter alloc] init];
     
@@ -37,7 +38,9 @@
      [NSValue valueWithCGPoint:CGPointMake(1, .678431373)],
      ]];
     
-    return [curves imageByFilteringImage:image];
+    */
+    
+    return [self applyLookup:@"frado_lookup_filter_1" image:image];
 }
 
 - (NSString *)name {

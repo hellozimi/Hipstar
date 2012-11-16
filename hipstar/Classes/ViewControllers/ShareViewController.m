@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *facebookLabel;
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
 @property (weak, nonatomic) IBOutlet UIView *indicator;
+@property (weak, nonatomic) IBOutlet UILabel *filterLabel;
 
 @end
 
@@ -63,6 +64,22 @@
     self.navigationItem.rightBarButtonItem.customView.exclusiveTouch = YES;
     
     self.twitterButton.exclusiveTouch = self.instagramButton.exclusiveTouch = self.facebookButton.exclusiveTouch = self.doneButton.exclusiveTouch = YES;
+    
+    
+    NSString *string = [Filter nameForFilter:self.filter effect:self.effect];
+    
+    NSRange heartRange = [string rangeOfString:@"♥"];
+    
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:string];
+    [attrString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:.392156863 green:.392156863 blue:.392156863 alpha:1.0] range:NSMakeRange(0, string.length)];
+    [attrString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue" size:22] range:NSMakeRange(0, string.length)];
+    
+    if (heartRange.length > 0) {
+        [attrString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HiraKakuProN-W6" size:22] range:heartRange];
+    }
+    
+    self.filterLabel.attributedText = attrString;
+    self.filterLabel.textAlignment = 1;
 }
 
 - (void)setFullImage:(UIImage *)fullImage {

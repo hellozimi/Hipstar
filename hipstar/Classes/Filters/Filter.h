@@ -20,6 +20,12 @@
 - (UIImage *)apply:(UIImage *)image;
 - (UIImage *)imageByApplyingAlpha:(UIImage *)image alpha:(CGFloat) alpha;
 
+- (UIImage *)applyLookup:(NSString *)lookupName image:(UIImage *)image;
+- (UIImage *)imageName:(NSString *)imageName alpha:(float)alpha;
+
+- (UIImage *)imageWithAlphaBlendingBottom:(UIImage *)bottomImage top:(UIImage *)topImage alpha:(float)alpha;
+- (UIImage *)imageWithOverlayBlendingBottom:(UIImage *)bottomImage top:(UIImage *)topImage;
+
 @property (nonatomic, weak, readonly) NSString *name;
 @property (nonatomic, weak, readonly) UIImage *image;
 

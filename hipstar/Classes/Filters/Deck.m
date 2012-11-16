@@ -12,6 +12,7 @@
 
 - (UIImage *)apply:(UIImage *)image {
     
+    /*
     GPUImageToneCurveFilter *curves = [[GPUImageToneCurveFilter alloc] init];
     
     [curves setRedControlPoints:@[
@@ -68,8 +69,8 @@
      [NSValue valueWithCGPoint:CGPointMake(1, 1)],
      ]];
     
-    
-    return [curves imageByFilteringImage:computed];
+    */
+    return [self applyLookup:@"deck_lookup_filter_1" image:image];
 }
 
 - (NSString *)name {

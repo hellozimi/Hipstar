@@ -12,6 +12,7 @@
 
 - (UIImage *)apply:(UIImage *)image {
     
+    /*
     GPUImageToneCurveFilter *curves = [[GPUImageToneCurveFilter alloc] init];
     [curves setRgbCompositeControlPoints:@[
      [NSValue valueWithCGPoint:CGPointMake(0, 0)],
@@ -95,10 +96,26 @@
     
     [bottom processImage];
     [overlay processImage];
+    */
     
     
+    image = [self applyLookup:@"chipper_lookup_filter_1" image:image];
+    image = [self applyLookup:@"chipper_lookup_filter_2" image:image];
+    image = [self applyLookup:@"chipper_lookup_filter_3" image:image];
     
-    return [gradientOverlay imageFromCurrentlyProcessedOutput];
+    UIImage *vignette = [self imageName:@"vignette" alpha:0.4];
+    
+    image = [self imageWithAlphaBlendingBottom:image top:vignette alpha:1.0];
+    
+    image = [self applyLookup:@"chipper_lookup_filter_4" image:image];
+    image = [self applyLookup:@"chipper_lookup_filter_5" image:image];
+    image = [self applyLookup:@"chipper_lookup_filter_6" image:image];
+    
+    UIImage *overlayImage = [self imageName:@"full_gradient.jpg" alpha:0.6];
+    image = [self imageWithOverlayBlendingBottom:image top:overlayImage];
+    
+    return image;
+    //return [gradientOverlay imageFromCurrentlyProcessedOutput];
 }
 
 - (NSString *)name {

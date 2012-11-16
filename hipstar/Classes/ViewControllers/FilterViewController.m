@@ -22,6 +22,9 @@
 #import "Frado.h"
 #import "Jug.h"
 #import "Frapp.h"
+#import "Clothesline.h"
+#import "Tassel.h"
+#import "Cronkite.h"
 
 // Distort
 #import "Mirror.h"
@@ -58,6 +61,7 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *effectsCollectionView;
 @property (weak, nonatomic) IBOutlet UICollectionView *filterCollectionView;
+@property (weak, nonatomic) IBOutlet UILabel *filterLabel;
 
 @property (weak, nonatomic) IBOutlet UIImageView *border;
 
@@ -81,11 +85,14 @@
     
     _filters = [NSMutableArray arrayWithArray:@[
                 [NoFX filter],
+                [Clothesline filter],
+                [Deck filter],
                 [Frado filter],
                 [Midtown filter],
-                [Deck filter],
+                [Tassel filter],
                 [Chipper filter],
                 [Sepia filter],
+                [Cronkite filter],
                 [Kale filter],
                 [Jug filter],
                 [Frapp filter]
@@ -164,6 +171,21 @@
 }
 
 - (void)update {
+    
+    NSString *string = [Filter nameForFilter:_currentFilter effect:_currentEffect];
+    
+    NSRange heartRange = [string rangeOfString:@"♥"];
+    
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:string];
+    [attrString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:.392156863 green:.392156863 blue:.392156863 alpha:1.0] range:NSMakeRange(0, string.length)];
+    [attrString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue" size:22] range:NSMakeRange(0, string.length)];
+    
+    if (heartRange.length > 0) {
+        [attrString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HiraKakuProN-W6" size:22] range:heartRange];
+    }
+    
+    self.filterLabel.attributedText = attrString;
+    self.filterLabel.textAlignment = 1;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         

@@ -12,7 +12,7 @@
 
 - (UIImage *)apply:(UIImage *)image {
     
-    
+    /*
     GPUImageToneCurveFilter *curves = [[GPUImageToneCurveFilter alloc] init];
     
     [curves setRedControlPoints:@[
@@ -90,8 +90,8 @@
     [top processImage];
     
     image = [alpha imageFromCurrentlyProcessedOutput];
-    
-    return image;
+    */
+    return [self applyLookup:@"frappe_lookup_filter_1" image:image];
 }
 
 - (NSString *)name {

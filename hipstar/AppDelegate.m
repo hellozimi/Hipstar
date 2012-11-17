@@ -7,10 +7,13 @@
 //
 
 #import "AppDelegate.h"
+#import "TestFlight.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [TestFlight takeOff:@"4dc571f02a1c25228085ae800109bc16_MTU1NDAwMjAxMi0xMS0xNiAxNjo0ODo0Mi45OTE1NzM"];
     
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar_background"] forBarMetrics:UIBarMetricsDefault];
     

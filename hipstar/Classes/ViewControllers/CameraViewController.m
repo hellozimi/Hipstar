@@ -303,6 +303,14 @@
         
         if ([self.device isExposurePointOfInterestSupported]) {
             [self.device setExposurePointOfInterest:point];
+            if ([self.device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+                [self.device setExposureMode:AVCaptureExposureModeContinuousAutoExposure];
+            }
+            else {
+                if ([self.device isExposureModeSupported:AVCaptureExposureModeLocked]) {
+                    [self.device setExposureMode:AVCaptureExposureModeLocked];
+                }
+            }
         }
         
         [self.device unlockForConfiguration];

@@ -86,15 +86,15 @@
     _filters = [NSMutableArray arrayWithArray:@[
                 [NoFX filter],
                 [Clothesline filter],
-                [Deck filter],
+                [Cronkite filter],
                 [Frado filter],
                 [Midtown filter],
                 [Tassel filter],
                 [Chipper filter],
                 [Sepia filter],
-                [Cronkite filter],
                 [Kale filter],
                 [Jug filter],
+                [Deck filter],
                 [Frapp filter]
                 ]];
     
@@ -181,7 +181,7 @@
     [attrString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue" size:22] range:NSMakeRange(0, string.length)];
     
     if (heartRange.length > 0) {
-        [attrString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HiraKakuProN-W6" size:22] range:heartRange];
+        [attrString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HiraKakuProN-W6" size:20] range:heartRange];
     }
     
     self.filterLabel.attributedText = attrString;
@@ -189,7 +189,7 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        double start = [NSDate timeIntervalSinceReferenceDate];
+        //double start = [NSDate timeIntervalSinceReferenceDate];
         
         UIImage *img = _previewImage;
         
@@ -197,18 +197,19 @@
             img = [_currentEffect apply:img];
         }
         
+        
         if (_currentFilter) {
             img = [_currentFilter apply:img];
         }
         
-        
         _previewImageView.image = img;
         
-        double end = [NSDate timeIntervalSinceReferenceDate];
+        //double end = [NSDate timeIntervalSinceReferenceDate];
+        /*
         if (0) {
             NSLog(@"Time to generate filter %@ & effect %@ — %f", _currentFilter.name, _currentEffect.name, end-start);
         }
-        
+        */
         self.spinner.hidden = YES;
     });
     
@@ -303,6 +304,10 @@
     
     if (collectionView == self.filterCollectionView) {
         
+        if (indexPath.row == _currentSelectedFilterIndex) {
+            return;
+        }
+        
         FilterCollectionViewCell *oldCell = (FilterCollectionViewCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:_currentSelectedFilterIndex inSection:0]];
         oldCell.selected = NO;
         
@@ -315,6 +320,10 @@
         
     }
     else {
+        
+        if (indexPath.row == _currentSelectedEffectIndex) {
+            return;
+        }
         
         FilterCollectionViewCell *oldCell = (FilterCollectionViewCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:_currentSelectedEffectIndex inSection:0]];
         oldCell.selected = NO;
@@ -379,12 +388,12 @@
         
         UIImage *full = _originalImage;
         
-        if (_currentFilter) {
-            full = [_currentFilter apply:_originalImage];
-        }
-        
         if (_currentEffect) {
             full = [_currentEffect apply:full];
+        }
+        
+        if (_currentFilter) {
+            full = [_currentFilter apply:full];
         }
         
         vc.fullImage = full;

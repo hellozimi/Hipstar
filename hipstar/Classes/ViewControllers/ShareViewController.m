@@ -75,7 +75,7 @@
     [attrString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue" size:22] range:NSMakeRange(0, string.length)];
     
     if (heartRange.length > 0) {
-        [attrString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HiraKakuProN-W6" size:22] range:heartRange];
+        [attrString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HiraKakuProN-W6" size:20] range:heartRange];
     }
     
     self.filterLabel.attributedText = attrString;
@@ -162,7 +162,7 @@
 - (IBAction)shareOnTwitter:(id)sender {
     SLComposeViewController *share = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
     [share addImage:self.fullImage];
-    [share setInitialText:[NSString stringWithFormat:@" - %@ with #hipstarapp", [Filter nameForFilter:self.filter effect:self.effect]]];
+    [share setInitialText:[NSString stringWithFormat:@" - %@ #hipstarapp", [Filter nameForFilter:self.filter effect:self.effect]]];
     
     SLComposeViewControllerCompletionHandler completeHandler = ^(SLComposeViewControllerResult result) {
         [share dismissViewControllerAnimated:YES completion:nil];
@@ -185,8 +185,11 @@
     
     NSURL *url = [NSURL fileURLWithPath:fullPath];
     
+    NSString *shareString = [NSString stringWithFormat:@" - %@ #hipstarapp", [Filter nameForFilter:self.filter effect:self.effect]];
+    
     self.dic = [UIDocumentInteractionController interactionControllerWithURL:url];
     self.dic.UTI = @"com.instagram.exclusivegram";
+    self.dic.annotation = @{ @"InstagramCaption" : shareString };
     
     [self.dic presentOpenInMenuFromRect:self.view.frame inView:self.view animated:YES];
 }
@@ -195,7 +198,7 @@
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         SLComposeViewController *share = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
         [share addImage:self.fullImage];
-        [share setInitialText:[NSString stringWithFormat:@" - %@ with hipstarapp", [Filter nameForFilter:self.filter effect:self.effect]]];
+        [share setInitialText:[NSString stringWithFormat:@" - %@ with the Hipstar iPhone App", [Filter nameForFilter:self.filter effect:self.effect]]];
         
         
         SLComposeViewControllerCompletionHandler completeHandler = ^(SLComposeViewControllerResult result) {

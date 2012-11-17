@@ -34,6 +34,11 @@
     
     CGContextDrawPath(context, kCGPathEOFill);
     
+    
+    CGContextSetFillColorWithColor(context, [[UIColor whiteColor] colorWithAlphaComponent:0.6].CGColor);
+    CGContextSetBlendMode(context, kCGBlendModeOverlay);
+    CGContextDrawPath(context, kCGPathEOFill);
+    
     CGContextRestoreGState(context);
     
     image = BitmapImageCreateFromContext(context);

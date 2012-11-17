@@ -26,7 +26,7 @@
         
         CGContextAddEllipseInRect(context, r);
         CGContextClip(context);
-        CGImageRef i = [self CGImageRotatedByAngle:image.CGImage angle:-10*1];
+        CGImageRef i = [self CGImageCreateRotatedByAngle:image.CGImage angle:-10*1];
         CGContextDrawImage(context, r, i);
         CGImageRelease(i);
         
@@ -39,7 +39,7 @@
         
         CGContextAddEllipseInRect(context, r);
         CGContextClip(context);
-        CGImageRef i = [self CGImageRotatedByAngle:image.CGImage angle:-10*2];
+        CGImageRef i = [self CGImageCreateRotatedByAngle:image.CGImage angle:-10*2];
         CGContextDrawImage(context, r, i);
         CGImageRelease(i);
         
@@ -53,7 +53,7 @@
         
         CGContextAddEllipseInRect(context, r);
         CGContextClip(context);
-        CGImageRef i = [self CGImageRotatedByAngle:image.CGImage angle:-10*3];
+        CGImageRef i = [self CGImageCreateRotatedByAngle:image.CGImage angle:-10*3];
         CGContextDrawImage(context, r, i);
         CGImageRelease(i);
         
@@ -67,7 +67,7 @@
         
         CGContextAddEllipseInRect(context, r);
         CGContextClip(context);
-        CGImageRef i = [self CGImageRotatedByAngle:image.CGImage angle:-10*4];
+        CGImageRef i = [self CGImageCreateRotatedByAngle:image.CGImage angle:-10*4];
         CGContextDrawImage(context, r, i);
         CGImageRelease(i);
         
@@ -81,7 +81,7 @@
         
         CGContextAddEllipseInRect(context, r);
         CGContextClip(context);
-        CGImageRef i = [self CGImageRotatedByAngle:image.CGImage angle:-10*5];
+        CGImageRef i = [self CGImageCreateRotatedByAngle:image.CGImage angle:-10*5];
         CGContextDrawImage(context, r, i);
         CGImageRelease(i);
         
@@ -96,7 +96,7 @@
 }
 
 
-- (CGImageRef)CGImageRotatedByAngle:(CGImageRef)imgRef angle:(CGFloat)angle
+- (CGImageRef)CGImageCreateRotatedByAngle:(CGImageRef)imgRef angle:(CGFloat)angle
 {
     CGFloat angleInRadians = angle * (M_PI / 180);
     CGFloat width = CGImageGetWidth(imgRef);

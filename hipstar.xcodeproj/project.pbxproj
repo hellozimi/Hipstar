@@ -38,6 +38,10 @@
 		F447091E1656DB4A00525319 /* Tassel.m in Sources */ = {isa = PBXBuildFile; fileRef = F447091D1656DB4900525319 /* Tassel.m */; };
 		F44709211656DB7400525319 /* Cronkite.m in Sources */ = {isa = PBXBuildFile; fileRef = F44709201656DB7300525319 /* Cronkite.m */; };
 		F44709241656DD0C00525319 /* cronkite_lookup_filter_1.png in Resources */ = {isa = PBXBuildFile; fileRef = F44709231656DD0C00525319 /* cronkite_lookup_filter_1.png */; };
+		F44709281656E39F00525319 /* jug_filter.png in Resources */ = {isa = PBXBuildFile; fileRef = F44709261656E39F00525319 /* jug_filter.png */; };
+		F44709291656E39F00525319 /* jug_lookup_filter_1.png in Resources */ = {isa = PBXBuildFile; fileRef = F44709271656E39F00525319 /* jug_lookup_filter_1.png */; };
+		F447092F1656EB7000525319 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F447092B1656EB7000525319 /* libTestFlight.a */; };
+		F44709331656EDA300525319 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F44709321656EDA200525319 /* libz.dylib */; };
 		F447D245165303E0008CDC51 /* Loader.m in Sources */ = {isa = PBXBuildFile; fileRef = F447D244165303E0008CDC51 /* Loader.m */; };
 		F447D24816546328008CDC51 /* Circle.m in Sources */ = {isa = PBXBuildFile; fileRef = F447D24716546328008CDC51 /* Circle.m */; };
 		F447D24B16546A0B008CDC51 /* Falling.m in Sources */ = {isa = PBXBuildFile; fileRef = F447D24A16546A0B008CDC51 /* Falling.m */; };
@@ -77,7 +81,6 @@
 		F447D2A516558FEE008CDC51 /* Frapp.m in Sources */ = {isa = PBXBuildFile; fileRef = F447D2A416558FEE008CDC51 /* Frapp.m */; };
 		F4AC5243165594F200CCC801 /* falling.png in Resources */ = {isa = PBXBuildFile; fileRef = F4AC5241165594F200CCC801 /* falling.png */; };
 		F4AC5244165594F200CCC801 /* falling@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4AC5242165594F200CCC801 /* falling@2x.png */; };
-		F4AC52551655A27B00CCC801 /* jug_filter.png in Resources */ = {isa = PBXBuildFile; fileRef = F4AC52541655A27B00CCC801 /* jug_filter.png */; };
 		F4B2544E164F40DE00693375 /* border_scale.png in Resources */ = {isa = PBXBuildFile; fileRef = F4B2544C164F40DE00693375 /* border_scale.png */; };
 		F4B2544F164F40DE00693375 /* border_scale@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4B2544D164F40DE00693375 /* border_scale@2x.png */; };
 		F4B25452164F424000693375 /* FilterCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B25451164F424000693375 /* FilterCollectionViewCell.m */; };
@@ -253,6 +256,11 @@
 		F447091F1656DB7300525319 /* Cronkite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cronkite.h; sourceTree = "<group>"; };
 		F44709201656DB7300525319 /* Cronkite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cronkite.m; sourceTree = "<group>"; };
 		F44709231656DD0C00525319 /* cronkite_lookup_filter_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cronkite_lookup_filter_1.png; sourceTree = "<group>"; };
+		F44709261656E39F00525319 /* jug_filter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jug_filter.png; sourceTree = "<group>"; };
+		F44709271656E39F00525319 /* jug_lookup_filter_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jug_lookup_filter_1.png; sourceTree = "<group>"; };
+		F447092B1656EB7000525319 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		F447092E1656EB7000525319 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		F44709321656EDA200525319 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		F447D243165303E0008CDC51 /* Loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Loader.h; sourceTree = "<group>"; };
 		F447D244165303E0008CDC51 /* Loader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Loader.m; sourceTree = "<group>"; };
 		F447D24616546328008CDC51 /* Circle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Circle.h; sourceTree = "<group>"; };
@@ -302,7 +310,6 @@
 		F447D2A416558FEE008CDC51 /* Frapp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frapp.m; sourceTree = "<group>"; };
 		F4AC5241165594F200CCC801 /* falling.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = falling.png; sourceTree = "<group>"; };
 		F4AC5242165594F200CCC801 /* falling@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "falling@2x.png"; sourceTree = "<group>"; };
-		F4AC52541655A27B00CCC801 /* jug_filter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jug_filter.png; sourceTree = "<group>"; };
 		F4B2544C164F40DE00693375 /* border_scale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border_scale.png; sourceTree = "<group>"; };
 		F4B2544D164F40DE00693375 /* border_scale@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "border_scale@2x.png"; sourceTree = "<group>"; };
 		F4B25450164F424000693375 /* FilterCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterCollectionViewCell.h; sourceTree = "<group>"; };
@@ -448,6 +455,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F44709331656EDA300525319 /* libz.dylib in Frameworks */,
 				F4DF3B68164F0A1400917DDB /* libGPUImage.a in Frameworks */,
 				F4ECDB9F164F077400349691 /* CoreVideo.framework in Frameworks */,
 				F4ECDB6A164F021600349691 /* OpenGLES.framework in Frameworks */,
@@ -459,6 +467,7 @@
 				F4BF12F6164D5E1800879A13 /* UIKit.framework in Frameworks */,
 				F4BF12F8164D5E1800879A13 /* Foundation.framework in Frameworks */,
 				F4BF12FA164D5E1800879A13 /* CoreGraphics.framework in Frameworks */,
+				F447092F1656EB7000525319 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,6 +489,7 @@
 			children = (
 				F44709031656D5FB00525319 /* full_gradient.jpg */,
 				F44709011656D48A00525319 /* vignette.png */,
+				F44709251656E39F00525319 /* Jug */,
 				F44709221656DD0C00525319 /* Cronkite */,
 				F44709081656D75D00525319 /* Clothesline */,
 				F44708E91656D2FC00525319 /* Chipper */,
@@ -564,6 +574,25 @@
 			path = Cronkite;
 			sourceTree = "<group>";
 		};
+		F44709251656E39F00525319 /* Jug */ = {
+			isa = PBXGroup;
+			children = (
+				F44709261656E39F00525319 /* jug_filter.png */,
+				F44709271656E39F00525319 /* jug_lookup_filter_1.png */,
+			);
+			path = Jug;
+			sourceTree = "<group>";
+		};
+		F447092A1656EB7000525319 /* TestFlightSDK1.1 */ = {
+			isa = PBXGroup;
+			children = (
+				F447092B1656EB7000525319 /* libTestFlight.a */,
+				F447092E1656EB7000525319 /* TestFlight.h */,
+			);
+			name = TestFlightSDK1.1;
+			path = Frameworks/TestFlightSDK1.1;
+			sourceTree = "<group>";
+		};
 		F4B25457164F51D800693375 /* filter */ = {
 			isa = PBXGroup;
 			children = (
@@ -632,7 +661,6 @@
 			isa = PBXGroup;
 			children = (
 				F44708CF1656CD9800525319 /* Lookup */,
-				F4AC52541655A27B00CCC801 /* jug_filter.png */,
 				F447D28716558199008CDC51 /* radial_gradient_40.png */,
 				F4B254F2164FFD9200693375 /* sonic_overlay.png */,
 			);
@@ -711,6 +739,8 @@
 		F4BF12F4164D5E1800879A13 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F44709321656EDA200525319 /* libz.dylib */,
+				F447092A1656EB7000525319 /* TestFlightSDK1.1 */,
 				F4DF3B67164F09F200917DDB /* GPUImage.h */,
 				F4DF3B5A164F09DC00917DDB /* GPUImage.xcodeproj */,
 				F4ECDB9E164F077400349691 /* CoreVideo.framework */,
@@ -1138,7 +1168,6 @@
 				F447D29716558E87008CDC51 /* hexagon@2x.png in Resources */,
 				F4AC5243165594F200CCC801 /* falling.png in Resources */,
 				F4AC5244165594F200CCC801 /* falling@2x.png in Resources */,
-				F4AC52551655A27B00CCC801 /* jug_filter.png in Resources */,
 				F44708E51656D05B00525319 /* midtown_lookup_filter_1.png in Resources */,
 				F44708E61656D05B00525319 /* midtown_lookup_filter_2.png in Resources */,
 				F44708E71656D05B00525319 /* midtown_lookup_filter_3.png in Resources */,
@@ -1157,6 +1186,8 @@
 				F44709191656D93B00525319 /* tassel_lookup_filter_1.png in Resources */,
 				F447091B1656D9AC00525319 /* frappe_lookup_filter_1.png in Resources */,
 				F44709241656DD0C00525319 /* cronkite_lookup_filter_1.png in Resources */,
+				F44709281656E39F00525319 /* jug_filter.png in Resources */,
+				F44709291656E39F00525319 /* jug_lookup_filter_1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1284,6 +1315,10 @@
 				GCC_PREFIX_HEADER = "hipstar/hipstar-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/GPUImage/Source/GPUImage.h\"";
 				INFOPLIST_FILE = "hipstar/hipstar-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks/TestFlightSDK1.1\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1292,13 +1327,17 @@
 		F4BF1311164D5E1800879A13 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Simon Andersson";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "hipstar/hipstar-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/GPUImage/Source/GPUImage.h\"";
 				INFOPLIST_FILE = "hipstar/hipstar-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks/TestFlightSDK1.1\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "389AC493-04BA-4FFE-9AE8-5CEA8C15B5BD";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

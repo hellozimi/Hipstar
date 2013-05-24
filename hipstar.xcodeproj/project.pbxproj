@@ -1327,7 +1327,7 @@
 		F4BF1311164D5E1800879A13 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Monte Rosa AB";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "hipstar/hipstar-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks/GPUImage/Source/GPUImage.h\"";
@@ -1337,7 +1337,7 @@
 					"\"$(SRCROOT)/Frameworks/TestFlightSDK1.1\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A2351472-D5CD-4964-8667-BFD79FD2F96B";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
